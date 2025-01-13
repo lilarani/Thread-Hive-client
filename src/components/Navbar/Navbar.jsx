@@ -12,13 +12,13 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink to={'/notification'}>
-          <IoMdNotifications className="text-2xl" />
+          <IoMdNotifications className="text-xl" />
         </NavLink>
       </li>
     </>
   );
   return (
-    <div className="navbar bg-base-100 container mx-auto">
+    <div className="navbar border-b-2 sticky top-0 z-50 container mx-auto backdrop:blur">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -52,7 +52,7 @@ const Navbar = () => {
       <div className="navbar-end">
         <Link
           to={'/login'}
-          className="px-4 py-1 bg-gray-100 font-semibold text-base"
+          className="px-4 py-1 bg-pink-100 font-semibold text-base shadow-md"
         >
           Join US
         </Link>
