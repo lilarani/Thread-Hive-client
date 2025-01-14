@@ -1,7 +1,19 @@
 import { IoMdNotifications } from 'react-icons/io';
 import { Link, NavLink } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
+  const { user, signOutUser } = useAuth();
+
+  const handleSignOut = () => {
+    signOutUser()
+      .then(result => {
+        console.log(result.user);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  };
   const navOptions = (
     <>
       <li>
@@ -50,12 +62,31 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navOptions}</ul>
       </div>
       <div className="navbar-end">
-        <Link
-          to={'/login'}
-          className="px-4 py-1 bg-pink-100 font-semibold text-base shadow-md"
-        >
-          Join US
-        </Link>
+        <h2>{}</h2>
+
+        {user ? (
+          <div className="flex flex-row gap-2">
+            <img
+              className="w-12 h-12 rounded-full"
+              src={user && user?.photoURL}
+              alt=""
+            />
+
+            <button
+              onClick={handleSignOut}
+              className="text-sm md:text-base font-bold"
+            >
+              Sign-Out
+            </button>
+          </div>
+        ) : (
+          <Link
+            to={'/login'}
+            className="px-4 py-1 bg-pink-100 font-semibold text-base shadow-md"
+          >
+            Join US
+          </Link>
+        )}
       </div>
     </div>
   );

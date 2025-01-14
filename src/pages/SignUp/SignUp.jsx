@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
+  const { createNewUser, updateUserProfile, setUser } = useAuth();
   const handleSignUp = event => {
     event.preventDefault();
     const form = event.target;
@@ -9,7 +12,22 @@ const SignUp = () => {
     const password = form.password.value;
     const photo = form.photo.value;
     console.log(name, email, password, photo);
+
+    createNewUser(email, password)
+      .then(result => {
+        setUser(result.user);
+        updateUserProfile({
+          displayName: name,
+          photoURL: photo,
+        }).then(() => {
+          toast.success(`Registration Successfully`);
+        });
+      })
+      .catch(error => {
+        toast.error(`Failed to create user ${error.message}`);
+      });
   };
+
   return (
     <div className="hero min-h-screen container mx-auto">
       <div className="hero-content flex-col lg:flex-row-reverse">
