@@ -1,9 +1,11 @@
 import { IoMdNotifications } from 'react-icons/io';
 import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import { useState } from 'react';
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
+  const [dropdown, setDropdown] = useState(false);
 
   const handleSignOut = () => {
     signOutUser()
@@ -13,6 +15,11 @@ const Navbar = () => {
       .catch(error => {
         console.log(error.message);
       });
+  };
+
+  // dropdown toggle
+  const toggleDropdown = () => {
+    setDropdown(!dropdown);
   };
   const navOptions = (
     <>
@@ -67,17 +74,45 @@ const Navbar = () => {
         {user ? (
           <div className="flex flex-row gap-2">
             <img
-              className="w-12 h-12 rounded-full"
+              className="w-12 h-12 rounded-full cursor-pointer"
               src={user && user?.photoURL}
               alt=""
+              onClick={toggleDropdown}
             />
-
-            <button
-              onClick={handleSignOut}
-              className="text-sm md:text-base font-bold"
-            >
-              Sign-Out
-            </button>
+            {dropdown && (
+              <ul className="absolute right-8 top-16 text-center bg-white text-black rounded shadow-lg mt-2 w-52 p-4 z-50">
+                <div className=" flex flex-col justify-center items-center">
+                  <img
+                    className="w-16 h-16 rounded-full"
+                    src={user && user?.photoURL}
+                    alt=""
+                  />
+                </div>
+                <li className="px-4 py-2 border-b text-gray-700 font-semibold">
+                  {user?.displayName || 'User'}
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard"
+                    className="block px-4 py-2 hover:bg-pink-100 transition-all ease-in-out duration-300"
+                    onClick={() => setDropdown(false)}
+                  >
+                    Dashboard
+                  </NavLink>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      handleSignOut();
+                      setDropdown(false);
+                    }}
+                    className="block w-full  px-4 py-2 hover:bg-pink-100 "
+                  >
+                    Sign-Out
+                  </button>
+                </li>
+              </ul>
+            )}
           </div>
         ) : (
           <Link

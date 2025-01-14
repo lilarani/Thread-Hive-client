@@ -1,8 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import toast from 'react-hot-toast';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useState } from 'react';
 
 const Login = () => {
   const { userLogin } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignin = event => {
     event.preventDefault();
@@ -12,10 +17,11 @@ const Login = () => {
 
     userLogin(email, password)
       .then(result => {
-        console.log(result.user);
+        toast.success(`Login Successfully`);
+        navigate('/');
       })
       .catch(error => {
-        console.groupEnd(error.message);
+        toast.error(`Failed Login`);
       });
   };
 
@@ -44,12 +50,18 @@ const Login = () => {
                 required
               />
             </div>
-            <div className="form-control">
+            <div className="form-control relative">
               <label className="label">
                 <span className="label-text">Password</span>
+                <button
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="top-12 right-2 absolute"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
               </label>
               <input
-                type="text"
+                type={showPassword ? 'text' : 'password'}
                 name="password"
                 placeholder="password"
                 className="input input-bordered"
