@@ -1,34 +1,66 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
+import useAxiosPublic from './../../hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
 
 const SignUp = () => {
-  const { user, createNewUser, updateUserProfile, setUser } = useAuth();
+  const { user, createNewUser, updateUserProfile, setUser, googleSignIn } =
+    useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = data =>
-    createNewUser(data.email, data.password)
-      .then(result => {
-        setUser(result.user);
-        updateUserProfile({
-          displayName: data.name,
-          photoURL: data.photo,
-        }).then(() => {
-          toast.success(`Registration Successfully`);
-        });
-      })
-      .catch(error => {
-        toast.error(`Failed to create user ${error.message}`);
+  const handleGoogleSignIn = () => {
+    googleSignIn().then(result => {
+      const userInfo = {
+        email: result.user?.email,
+        name: result.user?.displayName,
+      };
+      axiosPublic.post('/users', userInfo).then(res => {
+        navigate('/');
       });
+    });
+  };
+
+  const onSubmit = data =>
+    createNewUser(data.email, data.password).then(result => {
+      console.log(result.user);
+      setUser(result.user);
+      updateUserProfile(data.name, data.photo)
+        .then(() => {
+          const userInfo = {
+            name: data.name,
+            email: data.email,
+          };
+          axiosPublic.post('/users', userInfo).then(res => {
+            if (res.data.insertedId) {
+              reset();
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'User Created Successfully',
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate('/');
+            }
+          });
+        })
+        .catch(error => {
+          toast.error(`Failed to create user ${error.message}`);
+        });
+    });
 
   return (
     <div className="hero min-h-screen container mx-auto">
@@ -138,6 +170,13 @@ const SignUp = () => {
               <button className="text-base font-semibold px-4 py-1 bg-bgButton text-white text-center">
                 Sign-up
               </button>
+
+              <p
+                onClick={handleGoogleSignIn}
+                className="text-base font-semibold px-4 py-1 border-border border-[1px] text-center mt-5"
+              >
+                Login with Google
+              </p>
               <Link className="text-sm p-2" to={'/login'}>
                 Dont't Have an Account?
                 <span className="text-blue-500 ml-2 underline">Sign-in</span>

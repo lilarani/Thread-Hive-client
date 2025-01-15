@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useState } from 'react';
 
 const Login = () => {
-  const { userLogin } = useAuth();
+  const { userLogin, googleSignIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -23,6 +23,12 @@ const Login = () => {
       .catch(error => {
         toast.error(`Failed Login`);
       });
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn().then(res => {
+      navigate('/');
+    });
   };
 
   return (
@@ -80,7 +86,10 @@ const Login = () => {
                 Sign-in
               </button>
             </div>
-            <p className="text-base font-semibold px-4 py-1 border-border border-[1px] text-center">
+            <p
+              onClick={handleGoogleSignIn}
+              className="text-base font-semibold px-4 py-1 border-border border-[1px] text-center"
+            >
               Login with Google
             </p>
 

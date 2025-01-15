@@ -1,10 +1,17 @@
 import { useState } from 'react';
+import useAxiosPublic from './../../../hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
+import useAuth from '../../../hooks/useAuth';
 
 const AddPost = () => {
+  const axiosPublic = useAxiosPublic();
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
-    image: '',
-    name: '',
-    email: '',
+    userName: user?.displayName,
+    userEmail: user?.email,
+    authorImage: '',
+    authorName: '',
+    authorEmail: '',
     title: '',
     description: '',
     tag: '',
@@ -17,10 +24,28 @@ const AddPost = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log(formData);
-    setFormData(initialFormData);
+    try {
+      const response = await axiosPublic.post('/posts', formData);
+      if (response.data.insertedId) {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Post Added Successfully',
+          icon: 'success',
+          confirmButtonText: 'Cool',
+        });
+        e.target.reset();
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong!',
+        icon: 'error',
+        confirmButtonText: 'Try Again',
+      });
+    }
   };
 
   return (
@@ -43,8 +68,8 @@ const AddPost = () => {
               </label>
               <input
                 type="url"
-                name="image"
-                value={formData.image}
+                name="authorImage"
+                value={formData.authorImage}
                 onChange={handleChange}
                 placeholder="Author Image"
                 className="input input-bordered"
@@ -57,8 +82,8 @@ const AddPost = () => {
               </label>
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="authorName"
+                value={formData.authorName}
                 onChange={handleChange}
                 placeholder="Author Name"
                 className="input input-bordered"
@@ -74,8 +99,8 @@ const AddPost = () => {
               </label>
               <input
                 type="email"
-                name="email"
-                value={formData.email}
+                name="authorEmail"
+                value={formData.authorEmail}
                 onChange={handleChange}
                 placeholder="Author Email"
                 className="input input-bordered"
@@ -172,7 +197,7 @@ const AddPost = () => {
 
           <div className="form-control mt-6">
             <button className="bg-bgButton px-4 py-1 font-semibold ">
-              Add Coffee
+              Add Post
             </button>
           </div>
         </form>
