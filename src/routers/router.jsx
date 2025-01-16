@@ -6,7 +6,7 @@ import { BiNotification } from 'react-icons/bi';
 import Login from '../pages/Login/Login';
 import SignUp from '../pages/SignUp/SignUp';
 import PrivetRouter from './PrivetRouter';
-import Dashboard from '../pages/Dashboard/Dashboard/Dashboard';
+import Dashboard from '../layouts/Dashboard/Dashboard';
 import AddPost from '../pages/Dashboard/AddPost/AddPost';
 import MyProfile from '../pages/Dashboard/MyProfile/MyProfile';
 import MyPost from '../pages/Dashboard/MyPost/MyPost';

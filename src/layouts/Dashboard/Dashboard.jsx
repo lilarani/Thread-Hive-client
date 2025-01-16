@@ -2,7 +2,7 @@ import { GrUserAdmin, GrUserManager } from 'react-icons/gr';
 import { MdOutlineReportProblem } from 'react-icons/md';
 import { TfiAnnouncement } from 'react-icons/tfi';
 import { NavLink, Outlet } from 'react-router-dom';
-import useAdmin from '../../../hooks/useAdmin';
+import useAdmin from '../../hooks/useAdmin';
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
@@ -38,7 +38,7 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink
-                  to={'/dashboard/myPost'}
+                  to={'/dashboard/report'}
                   className={({ isActive }) =>
                     isActive ? 'bg-bgButton text-black' : ''
                   }
@@ -49,7 +49,7 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink
-                  to={'/dashboard/myPost'}
+                  to={'/dashboard/announcement'}
                   className={({ isActive }) =>
                     isActive ? 'bg-bgButton text-black' : ''
                   }

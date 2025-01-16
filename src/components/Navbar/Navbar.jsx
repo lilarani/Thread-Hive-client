@@ -2,10 +2,13 @@ import { IoMdNotifications } from 'react-icons/io';
 import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import { useState } from 'react';
+import useAdmin from '../../hooks/useAdmin';
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
   const [dropdown, setDropdown] = useState(false);
+
+  const [isAdmin] = useAdmin();
 
   const handleSignOut = () => {
     signOutUser()
@@ -63,7 +66,7 @@ const Navbar = () => {
             {navOptions}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Thread Hive</a>
+        <a className="text-xl">Thread Hive</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navOptions}</ul>
@@ -80,7 +83,7 @@ const Navbar = () => {
               onClick={toggleDropdown}
             />
             {dropdown && (
-              <ul className="absolute right-8 top-16 text-center bg-white text-black rounded shadow-lg mt-2 w-52 p-4 z-50">
+              <ul className="absolute right-8 top-16 text-center bg-pink-100 text-black rounded shadow-lg mt-2 w-52 p-4 z-50">
                 <div className=" flex flex-col justify-center items-center">
                   <img
                     className="w-16 h-16 rounded-full"
@@ -92,13 +95,17 @@ const Navbar = () => {
                   {user?.displayName || 'User'}
                 </li>
                 <li>
-                  <NavLink
-                    to="/dashboard"
-                    className="block px-4 py-2 hover:bg-pink-100 transition-all ease-in-out duration-300"
-                    onClick={() => setDropdown(false)}
-                  >
-                    Dashboard
-                  </NavLink>
+                  {user && (
+                    <NavLink
+                      to={
+                        isAdmin ? '/dashboard/manageUsers' : '/dashboard/myPost'
+                      }
+                      className="block px-4 py-1 hover:bg-bgButton font-semibold transition-all ease-in-out duration-300 hover:text-white"
+                      onClick={() => setDropdown(false)}
+                    >
+                      Dashboard
+                    </NavLink>
+                  )}
                 </li>
                 <li>
                   <button
@@ -106,7 +113,7 @@ const Navbar = () => {
                       handleSignOut();
                       setDropdown(false);
                     }}
-                    className="block w-full  px-4 py-2 hover:bg-pink-100 "
+                    className="block w-full  px-4 py-1 hover:bg-bgButton font-semibold hover:text-white  transition-all ease-in-out duration-300"
                   >
                     Sign-Out
                   </button>

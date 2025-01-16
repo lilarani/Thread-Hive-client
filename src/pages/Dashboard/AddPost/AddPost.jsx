@@ -2,14 +2,13 @@ import useAxiosPublic from './../../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AddPost = () => {
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const [showMembershipButton, setShowMembershipButton] = useState(false);
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     userName: user?.displayName,
@@ -24,7 +23,6 @@ const AddPost = () => {
     downVote: 0,
   });
 
-  let userEmail = user.email;
   useEffect(() => {
     axiosPublic
       .get(`/my-post`, { params: { userEmail: user.email } })
@@ -37,7 +35,7 @@ const AddPost = () => {
           setShowMembershipButton(true);
         }
       });
-  }, [userEmail]);
+  }, []);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -49,6 +47,7 @@ const AddPost = () => {
     try {
       const response = await axiosPublic.post('/posts', formData);
       console.log(response.data);
+
       if (response.data.insertedId) {
         Swal.fire({
           title: 'Success!',
@@ -56,7 +55,6 @@ const AddPost = () => {
           icon: 'success',
           confirmButtonText: 'Cool',
         });
-        e.target.reset();
       }
     } catch (error) {
       console.error(error);
