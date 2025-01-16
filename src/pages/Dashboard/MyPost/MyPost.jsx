@@ -10,7 +10,7 @@ const MyPost = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    axiosPublic.get(`/posts`).then(res => {
+    axiosPublic.get(`/posts/${user.email}`).then(res => {
       setMyPosts(res.data);
     });
   }, []);

@@ -44,7 +44,7 @@ const SignUp = () => {
             email: data.email,
             userPhoto: result.user?.photoURL,
             role: 'user',
-            badge: 'https://ibb.co.com/zmBtfbM',
+            badge: 'https://i.ibb.co.com/0n6zJZ7/bronze.jpg',
             membership: false,
           };
           axiosPublic.post('/users', userInfo).then(res => {
