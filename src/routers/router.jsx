@@ -11,6 +11,7 @@ import AddPost from '../pages/Dashboard/AddPost/AddPost';
 import MyProfile from '../pages/Dashboard/MyProfile/MyProfile';
 import MyPost from '../pages/Dashboard/MyPost/MyPost';
 import ManageUsers from '../pages/Dashboard/ManageUsers/ManageUsers';
+import AdminRouter from './AdminRouter';
 
 const router = createBrowserRouter([
   {
@@ -51,20 +52,37 @@ const router = createBrowserRouter([
       // admin related routes
       {
         path: 'manageUsers',
-        element: <ManageUsers></ManageUsers>,
+        element: (
+          <AdminRouter>
+            <ManageUsers></ManageUsers>
+          </AdminRouter>
+        ),
       },
+
       // user related routes
       {
         path: 'addPost',
-        element: <AddPost></AddPost>,
+        element: (
+          <PrivetRouter>
+            <AddPost></AddPost>
+          </PrivetRouter>
+        ),
       },
       {
         path: 'myProfile',
-        element: <MyProfile></MyProfile>,
+        element: (
+          <PrivetRouter>
+            <MyProfile></MyProfile>
+          </PrivetRouter>
+        ),
       },
       {
         path: 'myPost',
-        element: <MyPost></MyPost>,
+        element: (
+          <PrivetRouter>
+            <MyPost></MyPost>
+          </PrivetRouter>
+        ),
       },
     ],
   },

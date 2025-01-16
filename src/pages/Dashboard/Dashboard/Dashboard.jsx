@@ -18,7 +18,7 @@ const Dashboard = () => {
                 <NavLink
                   to={'/dashboard/adminProfile'}
                   className={({ isActive }) =>
-                    isActive ? 'bg-pink-500 text-black' : ''
+                    isActive ? 'bg-bgButton text-black' : ''
                   }
                 >
                   <GrUserAdmin />
@@ -29,7 +29,7 @@ const Dashboard = () => {
                 <NavLink
                   to={'/dashboard/manageUsers'}
                   className={({ isActive }) =>
-                    isActive ? 'bg-pink-500 text-black' : ''
+                    isActive ? 'bg-bgButton text-black' : ''
                   }
                 >
                   <GrUserManager />
@@ -40,7 +40,7 @@ const Dashboard = () => {
                 <NavLink
                   to={'/dashboard/myPost'}
                   className={({ isActive }) =>
-                    isActive ? 'bg-pink-500 text-black' : ''
+                    isActive ? 'bg-bgButton text-black' : ''
                   }
                 >
                   <MdOutlineReportProblem />
@@ -51,7 +51,7 @@ const Dashboard = () => {
                 <NavLink
                   to={'/dashboard/myPost'}
                   className={({ isActive }) =>
-                    isActive ? 'bg-pink-500 text-black' : ''
+                    isActive ? 'bg-bgButton text-black' : ''
                   }
                 >
                   <TfiAnnouncement />
@@ -65,7 +65,7 @@ const Dashboard = () => {
                 <NavLink
                   to={'/dashboard/myProfile'}
                   className={({ isActive }) =>
-                    isActive ? 'bg-pink-500 text-black' : ''
+                    isActive ? 'bg-bgButton text-black' : ''
                   }
                 >
                   My Profile
@@ -75,7 +75,7 @@ const Dashboard = () => {
                 <NavLink
                   to={'/dashboard/addPost'}
                   className={({ isActive }) =>
-                    isActive ? 'bg-pink-500 text-black' : ''
+                    isActive ? 'bg-bgButton text-black' : ''
                   }
                 >
                   Add Post
@@ -85,7 +85,7 @@ const Dashboard = () => {
                 <NavLink
                   to={'/dashboard/myPost'}
                   className={({ isActive }) =>
-                    isActive ? 'bg-pink-500 text-black' : ''
+                    isActive ? 'bg-bgButton text-black' : ''
                   }
                 >
                   My Posts

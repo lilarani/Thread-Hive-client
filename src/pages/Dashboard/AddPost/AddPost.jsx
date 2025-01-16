@@ -1,11 +1,16 @@
-import { useState } from 'react';
 import useAxiosPublic from './../../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AddPost = () => {
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
+  const [showForm, setShowForm] = useState(false);
+  const [showMembershipButton, setShowMembershipButton] = useState(false);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     userName: user?.displayName,
     userEmail: user?.email,
@@ -19,6 +24,21 @@ const AddPost = () => {
     downVote: 0,
   });
 
+  let userEmail = user.email;
+  useEffect(() => {
+    axiosPublic
+      .get(`/my-post`, { params: { userEmail: user.email } })
+      .then(res => {
+        if (res.data.membership || res.data.postCount < 5) {
+          setShowForm(true);
+          setShowMembershipButton(false);
+        } else {
+          setShowForm(false);
+          setShowMembershipButton(true);
+        }
+      });
+  }, [userEmail]);
+
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -28,6 +48,7 @@ const AddPost = () => {
     e.preventDefault();
     try {
       const response = await axiosPublic.post('/posts', formData);
+      console.log(response.data);
       if (response.data.insertedId) {
         Swal.fire({
           title: 'Success!',
@@ -58,87 +79,74 @@ const AddPost = () => {
           id nisi.
         </p>
       </div>
-      <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
-        <form onSubmit={handleSubmit} className="card-body">
-          {/* form first row */}
-          <div className="flex flex-col lg:flex-row gap-5">
-            <div className="form-control flex-1">
-              <label className="label">
-                <span className="label-text">Author Image</span>
-              </label>
-              <input
-                type="url"
-                name="authorImage"
-                value={formData.authorImage}
-                onChange={handleChange}
-                placeholder="Author Image"
-                className="input input-bordered"
-                required
-              />
+      {showForm && (
+        <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
+          <form onSubmit={handleSubmit} className="card-body">
+            {/* form first row */}
+            <div className="flex flex-col lg:flex-row gap-5">
+              <div className="form-control flex-1">
+                <label className="label">
+                  <span className="label-text">Author Image</span>
+                </label>
+                <input
+                  type="url"
+                  name="authorImage"
+                  value={formData.authorImage}
+                  onChange={handleChange}
+                  placeholder="Author Image"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control flex-1">
+                <label className="label">
+                  <span className="label-text">Author Name</span>
+                </label>
+                <input
+                  type="text"
+                  name="authorName"
+                  value={formData.authorName}
+                  onChange={handleChange}
+                  placeholder="Author Name"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
             </div>
-            <div className="form-control flex-1">
-              <label className="label">
-                <span className="label-text">Author Name</span>
-              </label>
-              <input
-                type="text"
-                name="authorName"
-                value={formData.authorName}
-                onChange={handleChange}
-                placeholder="Author Name"
-                className="input input-bordered"
-                required
-              />
+            {/* form second row */}
+            <div className="flex flex-col lg:flex-row gap-5">
+              <div className="form-control flex-1">
+                <label className="label">
+                  <span className="label-text">Author Email</span>
+                </label>
+                <input
+                  type="email"
+                  name="authorEmail"
+                  value={formData.authorEmail}
+                  onChange={handleChange}
+                  placeholder="Author Email"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control flex-1">
+                <label className="label">
+                  <span className="label-text">Post Title</span>
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  placeholder="Post Title"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
             </div>
-          </div>
-          {/* form second row */}
-          <div className="flex flex-col lg:flex-row gap-5">
-            <div className="form-control flex-1">
-              <label className="label">
-                <span className="label-text">Author Email</span>
-              </label>
-              <input
-                type="email"
-                name="authorEmail"
-                value={formData.authorEmail}
-                onChange={handleChange}
-                placeholder="Author Email"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control flex-1">
-              <label className="label">
-                <span className="label-text">Post Title</span>
-              </label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                placeholder="Post Title"
-                className="input input-bordered"
-                required
-              />
-            </div>
-          </div>
-          {/* form third row */}
-          <div className="flex flex-col lg:flex-row gap-5">
-            <div className="form-control flex-1">
-              <label className="label">
-                <span className="label-text">Post Description</span>
-              </label>
-              <input
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Post Description"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control flex-1">
+            {/* tags */}
+
+            <div className="form-control flex-1 ">
               <label className="label">
                 <span className="label-text">Tag</span>
               </label>
@@ -146,7 +154,7 @@ const AddPost = () => {
                 name="tag"
                 value={formData.tag}
                 onChange={handleChange}
-                className="select select-bordered w-full max-w-xs"
+                className="select select-bordered w-full "
               >
                 <option disabled value={''}>
                   Select a Relevant Technology Tag
@@ -161,47 +169,41 @@ const AddPost = () => {
                 <option>Others</option>
               </select>
             </div>
-          </div>
 
-          {/* form 4th row */}
-          <div className="flex flex-col lg:flex-row gap-5">
-            <div className="form-control flex-1">
-              <label className="label">
-                <span className="label-text">UpVote</span>
-              </label>
-              <input
-                type="text"
-                name="upVote"
-                value={formData.upVote}
-                onChange={handleChange}
-                placeholder="UpVote"
-                className="input input-bordered"
-                required
-              />
+            {/* form third row */}
+            <div className="flex flex-col lg:flex-row gap-5">
+              <div className="form-control flex-1">
+                <label className="label">
+                  <span className="label-text">Post Description</span>
+                </label>
+                <input
+                  type="text"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  placeholder="Post Description"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
             </div>
-            <div className="form-control flex-1">
-              <label className="label">
-                <span className="label-text">DownVote</span>
-              </label>
-              <input
-                type="text"
-                name="downVote"
-                value={formData.downVote}
-                onChange={handleChange}
-                placeholder="DownVote "
-                className="input input-bordered"
-                required
-              />
-            </div>
-          </div>
 
-          <div className="form-control mt-6">
-            <button className="bg-bgButton px-4 py-1 font-semibold ">
-              Add Post
-            </button>
-          </div>
-        </form>
-      </div>
+            <div className="form-control mt-6">
+              <button className="bg-bgButton px-4 py-1 font-semibold ">
+                Add Post
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+      {showMembershipButton && (
+        <Link
+          to={'/membership'}
+          className="px-4 py-2 bg-bgButton font-semibold text-base"
+        >
+          MemberShip
+        </Link>
+      )}
     </div>
   );
 };

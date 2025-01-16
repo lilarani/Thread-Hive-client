@@ -42,6 +42,10 @@ const SignUp = () => {
           const userInfo = {
             name: data.name,
             email: data.email,
+            userPhoto: result.user?.photoURL,
+            role: 'user',
+            badge: 'https://ibb.co.com/zmBtfbM',
+            membership: false,
           };
           axiosPublic.post('/users', userInfo).then(res => {
             if (res.data.insertedId) {
