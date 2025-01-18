@@ -1,26 +1,55 @@
 import { useEffect, useState } from 'react';
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import useAuth from '../../../hooks/useAuth';
 import { RiDeleteBin2Line } from 'react-icons/ri';
-import { FaCommentDots } from 'react-icons/fa';
+import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { MdOutlineInsertComment } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 const MyPost = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const [myPosts, setMyPosts] = useState([]);
   const { user } = useAuth();
+  const { theme } = useAuth();
 
   useEffect(() => {
-    axiosPublic.get(`/posts/${user.email}`).then(res => {
+    axiosSecure.get(`/posts/${user.email}`).then(res => {
       setMyPosts(res.data);
     });
   }, []);
+
+  const handleDeletePost = id => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then(result => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/posts/${id}`).then(res => {
+          if (res.data.deletedCount > 0) {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Your file has been deleted.',
+              icon: 'success',
+            });
+          }
+          let info = myPosts.filter(item => item._id !== id);
+          setMyPosts(info);
+        });
+      }
+    });
+  };
 
   return (
     <div className="container mx-auto">
       <h2>my post: {myPosts.length}</h2>
 
-      <div className="overflow-x-auto">
-        <table className="table table-zebra">
+      <div className={`overflow-x-auto`}>
+        <table className="table table-zebra  ">
           {/* head */}
           <thead>
             <tr>
@@ -38,12 +67,14 @@ const MyPost = () => {
                 <td>{post.title}</td>
                 <td>{post.upVote}</td>
                 <td>
-                  <FaCommentDots className="text-2xl cursor-pointer" />
+                  <Link to={'/dashboard/allComment'}>
+                    <MdOutlineInsertComment className="text-2xl cursor-pointer" />
+                  </Link>
                 </td>
                 <td>
-                  {
+                  <button onClick={() => handleDeletePost(post._id)}>
                     <RiDeleteBin2Line className="text-red-500 text-2xl cursor-pointer" />
-                  }
+                  </button>
                 </td>
               </tr>
             ))}

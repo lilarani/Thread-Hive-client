@@ -18,6 +18,20 @@ const AuthProvider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
   const axiosPublic = useAxiosPublic();
 
+  let themeLocalStorage = localStorage.getItem('theme');
+  let myTheme = themeLocalStorage ? themeLocalStorage : 'light';
+  const [theme, setTheme] = useState(myTheme);
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+    document.body.className = theme;
+  }, [theme]);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+  };
+
   const createNewUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -78,6 +92,8 @@ const AuthProvider = ({ children }) => {
     loading,
     setLoading,
     googleSignIn,
+    toggleTheme,
+    theme,
   };
 
   return (

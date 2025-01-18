@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment/moment';
 
 const AddPost = () => {
   const axiosPublic = useAxiosPublic();
@@ -21,6 +22,7 @@ const AddPost = () => {
     tag: '',
     upVote: 0,
     downVote: 0,
+    date: new Date(),
   });
 
   useEffect(() => {
@@ -174,13 +176,14 @@ const AddPost = () => {
                 <label className="label">
                   <span className="label-text">Post Description</span>
                 </label>
-                <input
+                <textarea
+                  rows={'4'}
                   type="text"
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  placeholder="Post Description"
-                  className="input input-bordered"
+                  placeholder="Write..."
+                  className="textarea textarea-bordered"
                   required
                 />
               </div>

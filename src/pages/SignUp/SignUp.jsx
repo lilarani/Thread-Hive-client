@@ -46,6 +46,7 @@ const SignUp = () => {
             role: 'user',
             badge: 'https://i.ibb.co.com/0n6zJZ7/bronze.jpg',
             membership: false,
+            status: 'Inactive',
           };
           axiosPublic.post('/users', userInfo).then(res => {
             if (res.data.insertedId) {

@@ -12,6 +12,10 @@ import MyProfile from '../pages/Dashboard/MyProfile/MyProfile';
 import MyPost from '../pages/Dashboard/MyPost/MyPost';
 import ManageUsers from '../pages/Dashboard/ManageUsers/ManageUsers';
 import AdminRouter from './AdminRouter';
+import Announcement from '../pages/Dashboard/Announcement/Announcement';
+import ReportedActivities from '../pages/Dashboard/ReportedActivities/ReportedActivities';
+import AllComment from '../pages/Dashboard/AllComment/AllComment';
+import AdminProfile from '../pages/Dashboard/AdminProfile/AdminProfile';
 
 const router = createBrowserRouter([
   {
@@ -59,6 +63,31 @@ const router = createBrowserRouter([
         ),
       },
 
+      {
+        path: 'announcement',
+        element: (
+          <AdminRouter>
+            <Announcement></Announcement>
+          </AdminRouter>
+        ),
+      },
+      {
+        path: 'reportedActivities',
+        element: (
+          <AdminRouter>
+            <ReportedActivities></ReportedActivities>
+          </AdminRouter>
+        ),
+      },
+      {
+        path: 'adminProfile',
+        element: (
+          <AdminRouter>
+            <AdminProfile></AdminProfile>
+          </AdminRouter>
+        ),
+      },
+
       // user related routes
       {
         path: 'addPost',
@@ -81,6 +110,14 @@ const router = createBrowserRouter([
         element: (
           <PrivetRouter>
             <MyPost></MyPost>
+          </PrivetRouter>
+        ),
+      },
+      {
+        path: 'allComment',
+        element: (
+          <PrivetRouter>
+            <AllComment></AllComment>
           </PrivetRouter>
         ),
       },

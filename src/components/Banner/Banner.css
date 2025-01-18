@@ -1,0 +1,8 @@
+.banner {
+  background-image: url('../../assets/Images/banner2.png');
+  background-blend-mode: overlay;
+  background-color: rgb(0, 0, 0, 0.5);
+  background-position: center;
+  height: 350px;
+  width: 100%;
+}

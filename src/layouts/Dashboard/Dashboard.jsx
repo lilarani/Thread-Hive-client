@@ -3,15 +3,17 @@ import { MdOutlineReportProblem } from 'react-icons/md';
 import { TfiAnnouncement } from 'react-icons/tfi';
 import { NavLink, Outlet } from 'react-router-dom';
 import useAdmin from '../../hooks/useAdmin';
+import useAuth from '../../hooks/useAuth';
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
+  const { theme } = useAuth();
 
   return (
     <div className="flex ">
       {/* dashboard side bar */}
       <div className="w-64 min-h-screen bg-[#0f172a] ">
-        <ul className="menu  text-base font-semibold text-gray-200">
+        <ul className="menu text-xs md:text-base font-semibold text-gray-200">
           {isAdmin ? (
             <>
               <li>
@@ -38,7 +40,7 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink
-                  to={'/dashboard/report'}
+                  to={'/dashboard/reportedActivities'}
                   className={({ isActive }) =>
                     isActive ? 'bg-bgButton text-black' : ''
                   }
@@ -107,7 +109,11 @@ const Dashboard = () => {
       </div>
 
       {/* dashboard content */}
-      <div className="flex-1 p-4 bg-pink-50">
+      <div
+        className={`flex-1 p-4 ${
+          theme === 'dark' ? 'bg-pink-50 text-black' : ''
+        } `}
+      >
         <Outlet></Outlet>
       </div>
     </div>

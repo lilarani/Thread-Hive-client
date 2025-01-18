@@ -3,9 +3,10 @@ import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import { useState } from 'react';
 import useAdmin from '../../hooks/useAdmin';
+import logo from '../../assets/Images/logo-thread-hive.jpg';
 
 const Navbar = () => {
-  const { user, signOutUser } = useAuth();
+  const { user, signOutUser, toggleTheme } = useAuth();
   const [dropdown, setDropdown] = useState(false);
 
   const [isAdmin] = useAdmin();
@@ -40,7 +41,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="navbar border-b-2 sticky top-0 z-50 container mx-auto backdrop:blur">
+    <div className="navbar sticky top-0 z-50 container mx-auto backdrop:blur">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -66,13 +67,21 @@ const Navbar = () => {
             {navOptions}
           </ul>
         </div>
-        <a className="text-xl">Thread Hive</a>
+        <img className="w-10 h-10 rounded-full mr-2" src={logo} alt="" />
+        <a className="text-sm md:text-xl">Thread Hive</a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{navOptions}</ul>
+        <ul className="menu menu-horizontal px-1 ">{navOptions}</ul>
       </div>
       <div className="navbar-end">
-        <h2>{}</h2>
+        <div className="pr-6 md:pr-14">
+          <input
+            onClick={toggleTheme}
+            type="checkbox"
+            className="toggle"
+            defaultChecked
+          />
+        </div>
 
         {user ? (
           <div className="flex flex-row gap-2">

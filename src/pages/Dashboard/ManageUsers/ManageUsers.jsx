@@ -13,13 +13,13 @@ const ManageUsers = () => {
           authorization: `Bearer ${localStorage.getItem('access-token')}`,
         },
       });
+
       return res.data;
     },
   });
 
   const handleMakeAdmin = user => {
     axiosSecure.patch(`/users/admin/${user._id}`).then(res => {
-      console.log(res.data);
       if (res.data.modifiedCount > 0) {
         refetch();
         Swal.fire({
@@ -77,7 +77,9 @@ const ManageUsers = () => {
                     </button>
                   )}
                 </td>
-                <td className="border border-gray-300 px-4 py-2">Active</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {user.status}
+                </td>
               </tr>
             ))}
           </tbody>
