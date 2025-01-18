@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useParams } from 'react-router-dom';
+import { MdReportProblem } from 'react-icons/md';
 
 const AllComment = () => {
-  const { postId } = useParams();
+  const { id } = useParams();
+  console.log(id);
   const axiosSecure = useAxiosSecure();
   const [allComments, setAllComments] = useState([]);
 
   useEffect(() => {
-    axiosSecure.get(`/comments/${postId}`).then(res => {
-      console.log(res.data.comments);
+    axiosSecure.get(`/comments/${id}`).then(res => {
+      console.log(res.data);
       setAllComments(res.data);
     });
-  }, [postId]);
+  }, [id]);
 
   return (
     <div>
@@ -32,12 +34,33 @@ const AllComment = () => {
           </thead>
           <tbody>
             {allComments.map((comment, index) => (
-              <tr>
+              <tr key={index}>
                 <th>{index + 1}</th>
                 <td>{comment.email}</td>
                 <td>{comment.commentText}</td>
-                <td>{'Nice '}</td>
-                <td>{'okay'}</td>
+                <td>
+                  <details className="dropdown">
+                    <summary className="px-4 py-1 bg-[#0f172a] text-white m-1">
+                      feedback
+                    </summary>
+                    <ul className="menu dropdown-content text-black bg-pink-100 rounded-box z-[1] w-52 p-2 shadow">
+                      <li>
+                        <a>Positive Feedback</a>
+                      </li>
+                      <li>
+                        <a>Neutral Feedback</a>
+                      </li>
+                      <li>
+                        <a>Negative Feedback</a>
+                      </li>
+                    </ul>
+                  </details>
+                </td>
+                <td>
+                  <button className="px-4 py-1 bg-bgButton text-white">
+                    <MdReportProblem />
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

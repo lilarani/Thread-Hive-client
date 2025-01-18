@@ -10,7 +10,6 @@ const MyPost = () => {
   const axiosSecure = useAxiosSecure();
   const [myPosts, setMyPosts] = useState([]);
   const { user } = useAuth();
-  const { theme } = useAuth();
 
   useEffect(() => {
     axiosSecure.get(`/posts/${user.email}`).then(res => {
@@ -67,7 +66,7 @@ const MyPost = () => {
                 <td>{post.title}</td>
                 <td>{post.upVote}</td>
                 <td>
-                  <Link to={'/dashboard/allComment'}>
+                  <Link to={`/dashboard/allComment/${post._id}`}>
                     <MdOutlineInsertComment className="text-2xl cursor-pointer" />
                   </Link>
                 </td>

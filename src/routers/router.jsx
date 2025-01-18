@@ -114,7 +114,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'allComment',
+        path: 'allComment/:id',
         element: (
           <PrivetRouter>
             <AllComment></AllComment>
