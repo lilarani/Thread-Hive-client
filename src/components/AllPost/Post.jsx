@@ -5,6 +5,7 @@ import { BiDownvote } from 'react-icons/bi';
 import { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { WhatsappShareButton } from 'react-share';
 
 const Post = ({ post }) => {
   const { tag = [] } = post;
@@ -13,6 +14,8 @@ const Post = ({ post }) => {
   const [showComentInput, setShowCommentInput] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [comments, setComments] = useState(post.comments || []);
+  const [upVotes, setUpVotes] = useState(0);
+  const [downVotes, setDownVotes] = useState(0);
   const { theme } = useAuth();
 
   // handle comment
@@ -46,6 +49,18 @@ const Post = ({ post }) => {
     }
   };
 
+  // handle upVote button function
+  const handleUpVote = () => {
+    setUpVotes(upVotes + 1);
+    console.log(upVotes);
+  };
+
+  // handle down vote button function
+  const handleDownVote = () => {
+    setDownVotes(downVotes === 0 ? -1 : downVotes - 1);
+    console.log(downVotes);
+  };
+
   return (
     <div
       className={`card ${
@@ -75,14 +90,22 @@ const Post = ({ post }) => {
       {/* Like, Comment, Share */}
       <div className="flex justify-between items-center mt-4 ">
         {/* Up Vote */}
-        <button className="flex items-center space-x-1 hover:text-pink-600">
+        <button
+          onClick={handleUpVote}
+          className="flex items-center space-x-1 hover:text-pink-600"
+        >
           <BiUpvote className="md:w-7 h-7" />
           <span className="text-xs md:text-xl">Up Vote</span>
+          <span className="text-xs md:text-xl">0 </span>
         </button>
         {/* Down Vote */}
-        <button className="flex items-center space-x-1 hover:text-pink-600">
+        <button
+          onClick={handleDownVote}
+          className="flex items-center space-x-1 hover:text-pink-600"
+        >
           <BiDownvote className="md:w-7 h-7" />
           <span className="text-xs md:text-xl">Down Vote</span>
+          <span className="text-xs md:text-xl">0 </span>
         </button>
         {/* comment button */}
         <button
@@ -92,10 +115,13 @@ const Post = ({ post }) => {
           <MdOutlineInsertComment className="md:w-7 h-7" />
           <span className="text-xs md:text-xl">Comment</span>
         </button>
-        <button className="flex items-center space-x-1 hover:text-pink-600">
+        <WhatsappShareButton
+          url={`http://localhost:5173`}
+          className="flex items-center space-x-1 hover:text-pink-600"
+        >
           <FaShareAlt className="md:w-7 h-7" />
           <span className="text-xs md:text-xl">Share</span>
-        </button>
+        </WhatsappShareButton>
       </div>
 
       {showComentInput && (
