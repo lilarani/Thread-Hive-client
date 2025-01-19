@@ -13,7 +13,7 @@ const AllPost = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container mx-auto">
       {allPosts.map(post => (
         <Post key={post._id} post={post}></Post>
       ))}

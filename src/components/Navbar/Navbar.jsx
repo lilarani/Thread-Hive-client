@@ -133,7 +133,7 @@ const Navbar = () => {
         ) : (
           <Link
             to={'/login'}
-            className="px-4 py-1 bg-pink-100 font-semibold text-base shadow-md"
+            className="px-4 py-1 bg-pink-100 font-semibold text-black shadow-md"
           >
             Join US
           </Link>

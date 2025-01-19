@@ -22,7 +22,6 @@ const Post = ({ post }) => {
   const handleCommentButton = async () => {
     if (!commentText) return;
 
-    // Assuming API function to save the comment
     const newComment = {
       postId: post._id,
       email: user.email,
@@ -52,7 +51,7 @@ const Post = ({ post }) => {
   // handle upVote button function
   const handleUpVote = async () => {
     try {
-      const response = await axiosSecure.patch(`/posts/${post._id}`, {
+      const response = await axiosSecure.patch(`/posts/downVote/${post._id}`, {
         voteType: 'upVote',
       });
 
@@ -66,10 +65,20 @@ const Post = ({ post }) => {
   };
 
   // handle down vote button function
-  // const handleDownVote = () => {
-  //   setDownVotes(downVotes === 0 ? -1 : downVotes - 1);
-  //   console.log(downVotes);
-  // };
+  const handleDownVote = async () => {
+    try {
+      const response = await axiosSecure.patch(`/posts/downVote/${post._id}`, {
+        voteType: 'downVote',
+      });
+
+      if (response.data.modifiedCount > 0) {
+        setDownVotes(downVotes + 1);
+        post.downVote = (post.downVote || 0) + 1;
+      }
+    } catch (error) {
+      console.error('Error decrementing downVote:', error);
+    }
+  };
 
   return (
     <div
@@ -110,12 +119,12 @@ const Post = ({ post }) => {
         </button>
         {/* Down Vote */}
         <button
-          // onClick={handleDownVote}
+          onClick={handleDownVote}
           className="flex items-center space-x-1 hover:text-pink-600"
         >
           <BiDownvote className="md:w-7 h-7" />
           <span className="text-xs md:text-xl">Down Vote</span>
-          <span className="text-xs md:text-xl">0 </span>
+          <span className="text-xs md:text-xl">{post.downVote}</span>
         </button>
         {/* comment button */}
         <button
@@ -124,6 +133,7 @@ const Post = ({ post }) => {
         >
           <MdOutlineInsertComment className="md:w-7 h-7" />
           <span className="text-xs md:text-xl">Comment</span>
+          <span className="text-xs md:text-xl">{comments.length}</span>
         </button>
         <WhatsappShareButton
           url={`http://localhost:5173`}
@@ -147,7 +157,7 @@ const Post = ({ post }) => {
             name="comment"
             value={commentText}
             onChange={e => setCommentText(e.target.value)}
-            className="flex-1 p-2 border text-xs md:text-base border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
+            className="flex-1 p-2 border text-xs md:text-base border-gray-300 rounded-lg focus:outline-none focus:border-pink-500 text-black"
           />
           <button
             onClick={handleCommentButton}

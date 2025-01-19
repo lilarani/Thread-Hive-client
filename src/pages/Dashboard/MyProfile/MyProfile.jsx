@@ -4,10 +4,14 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { BiDownvote, BiUpvote } from 'react-icons/bi';
 import { MdOutlineInsertComment } from 'react-icons/md';
 import { FaShareAlt } from 'react-icons/fa';
+import { WhatsappShareButton } from 'react-share';
 
 const MyProfile = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const [showComentInput, setShowCommentInput] = useState(false);
+  const [commentText, setCommentText] = useState('');
+  const [comments, setComments] = useState([]);
   const [recentPosts, setRecentPosts] = useState([]);
   const [myInfo, setMyInfo] = useState('');
 
@@ -17,11 +21,34 @@ const MyProfile = () => {
     });
   }, []);
 
+  // recent post get req
   useEffect(() => {
     axiosSecure.get(`/posts/recent/${user.email}`).then(res => {
       setRecentPosts(res.data);
     });
   }, []);
+
+  // handle comment
+  const handleCommentButton = async postId => {
+    if (!commentText) return;
+
+    const newComment = {
+      postId,
+      email: user.email,
+      commentText,
+      feedback: null,
+      isReported: false,
+      date: new Date(),
+    };
+
+    axiosSecure.post('/comments', newComment).then(res => {
+      console.log(res.data);
+    });
+
+    // Update the comments for the specific post
+    setComments(prevComments => [...prevComments, newComment]);
+    setCommentText('');
+  };
 
   return (
     <div className="container mx-auto p-8">
@@ -32,7 +59,6 @@ const MyProfile = () => {
             alt=""
             className="w-24 h-24 rounded-full "
           />
-
           <h2 className="text-2xl font-bold">{myInfo.name}</h2>
           <p className="text-xl font-semibold">{myInfo.email}</p>
           <div className="flex">
@@ -80,20 +106,55 @@ const MyProfile = () => {
                 <button className="flex items-center space-x-1 hover:text-pink-600">
                   <BiUpvote className="md:w-7 h-7" />
                   <span className="text-xs md:text-xl">Up Vote</span>
+                  <span className="text-xs md:text-xl">{post.upVote}</span>
                 </button>
                 <button className="flex items-center space-x-1 hover:text-pink-600">
                   <BiDownvote className="md:w-7 h-7" />
                   <span className="text-xs md:text-xl">Down Vote</span>
+                  <span className="text-xs md:text-xl">{post.downVote}</span>
                 </button>
-                <button className="flex items-center space-x-1 hover:text-pink-600">
+                <button
+                  onClick={() => setShowCommentInput(!showComentInput)}
+                  className="flex items-center space-x-1 hover:text-pink-600"
+                >
                   <MdOutlineInsertComment className="md:w-7 h-7" />
                   <span className="text-xs md:text-xl">Comment</span>
                 </button>
-                <button className="flex items-center space-x-1 hover:text-pink-600">
+
+                {/* share button */}
+                <WhatsappShareButton
+                  url={`http://localhost:5173`}
+                  className="flex items-center space-x-1 hover:text-pink-600"
+                >
                   <FaShareAlt className="md:w-7 h-7" />
                   <span className="text-xs md:text-xl">Share</span>
-                </button>
+                </WhatsappShareButton>
               </div>
+
+              {/* Comment input */}
+              {showComentInput && (
+                <div className="mt-4 flex items-start space-x-2">
+                  <img
+                    src={post.authorImage}
+                    alt="User"
+                    className="w-10 h-10 rounded-full"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Write a comment..."
+                    name="comment"
+                    value={commentText}
+                    onChange={e => setCommentText(e.target.value)}
+                    className="flex-1 p-2 border text-xs md:text-base border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
+                  />
+                  <button
+                    onClick={() => handleCommentButton(post._id)} // Pass post._id
+                    className="bg-bgButton px-2 md:px-4 py-2 rounded-lg font-semibold text-xs md:text-base hover:bg-pink-600 hover:text-white transition-all duration-500 ease-in"
+                  >
+                    Add Comment
+                  </button>
+                </div>
+              )}
             </div>
           ))}
         </div>
