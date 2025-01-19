@@ -50,16 +50,26 @@ const Post = ({ post }) => {
   };
 
   // handle upVote button function
-  const handleUpVote = () => {
-    setUpVotes(upVotes + 1);
-    console.log(upVotes);
+  const handleUpVote = async () => {
+    try {
+      const response = await axiosSecure.patch(`/posts/${post._id}`, {
+        voteType: 'upVote',
+      });
+
+      if (response.data.modifiedCount > 0) {
+        setUpVotes(upVotes + 1);
+        post.upVote = (post.upVote || 0) + 1;
+      }
+    } catch (error) {
+      console.error('Error incrementing upVote:', error);
+    }
   };
 
   // handle down vote button function
-  const handleDownVote = () => {
-    setDownVotes(downVotes === 0 ? -1 : downVotes - 1);
-    console.log(downVotes);
-  };
+  // const handleDownVote = () => {
+  //   setDownVotes(downVotes === 0 ? -1 : downVotes - 1);
+  //   console.log(downVotes);
+  // };
 
   return (
     <div
@@ -96,11 +106,11 @@ const Post = ({ post }) => {
         >
           <BiUpvote className="md:w-7 h-7" />
           <span className="text-xs md:text-xl">Up Vote</span>
-          <span className="text-xs md:text-xl">0 </span>
+          <span className="text-xs md:text-xl">{post.upVote} </span>
         </button>
         {/* Down Vote */}
         <button
-          onClick={handleDownVote}
+          // onClick={handleDownVote}
           className="flex items-center space-x-1 hover:text-pink-600"
         >
           <BiDownvote className="md:w-7 h-7" />
