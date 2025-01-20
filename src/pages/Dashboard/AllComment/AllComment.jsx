@@ -125,14 +125,24 @@ const AllComment = () => {
 
                 {/* Report Button */}
                 <td>
-                  <button
-                    className="px-4 py-1 bg-[#0f172a] text-white "
-                    // Disable the button if no feedback
+                  {comment.reported ? (
+                    <button
+                      className="px-4 py-1 bg-[#0f172a] text-white "
+                      // Disable the button if no feedback
 
-                    onClick={() => handleReport(comment._id)}
-                  >
-                    <MdReportProblem className="text-2xl" />
-                  </button>
+                      onClick={() => handleReport(comment._id)}
+                    >
+                      <MdReportProblem className="text-2xl" />
+                    </button>
+                  ) : (
+                    <button
+                      disabled
+                      className="px-4 py-1 bg-[#0f172a] text-white "
+                      // Disable the button if no feedback
+                    >
+                      <MdReportProblem className="text-2xl" />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

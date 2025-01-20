@@ -44,11 +44,11 @@ const MyPost = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto bg-pink-50">
       <h2>my post: {myPosts.length}</h2>
 
       <div className={`overflow-x-auto`}>
-        <table className="table table-zebra  ">
+        <table className="table table-zebra ">
           {/* head */}
           <thead>
             <tr>

@@ -136,7 +136,7 @@ const Post = ({ post }) => {
           <span className="text-xs md:text-xl">{comments.length}</span>
         </button>
         <WhatsappShareButton
-          url={`http://localhost:5173`}
+          url={`http://localhost:5173/${post._id}`}
           className="flex items-center space-x-1 hover:text-pink-600"
         >
           <FaShareAlt className="md:w-7 h-7" />

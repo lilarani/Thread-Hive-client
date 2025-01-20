@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import AllPost from '../../components/AllPost/AllPost';
 import Banner from '../../components/Banner/Banner';
 
 const Home = () => {
+  const [allPosts, setAllPosts] = useState([]);
+
   return (
     <div>
-      <Banner></Banner>
-      <AllPost></AllPost>
+      <Banner setAllPosts={setAllPosts}></Banner>
+      <AllPost allPosts={allPosts} setAllPosts={setAllPosts}></AllPost>
     </div>
   );
 };
