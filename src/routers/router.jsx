@@ -16,6 +16,7 @@ import Announcement from '../pages/Dashboard/Announcement/Announcement';
 import ReportedActivities from '../pages/Dashboard/ReportedActivities/ReportedActivities';
 import AllComment from '../pages/Dashboard/AllComment/AllComment';
 import AdminProfile from '../pages/Dashboard/AdminProfile/AdminProfile';
+import PostDetails from '../pages/PostDetails/PostDetails';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: 'signUp',
         element: <SignUp></SignUp>,
+      },
+      {
+        path: 'post-details/:id',
+        element: <PostDetails></PostDetails>,
       },
     ],
   },

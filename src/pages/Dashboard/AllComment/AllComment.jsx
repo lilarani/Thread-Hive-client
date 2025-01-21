@@ -1,44 +1,38 @@
 import { useParams } from 'react-router-dom';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-import useAuth from '../../../hooks/useAuth';
-import { useEffect, useState } from 'react';
+
+import { useState } from 'react';
 import { MdReportProblem } from 'react-icons/md';
 import Swal from 'sweetalert2';
+import useComments from '../../../hooks/useComments';
+import toast from 'react-hot-toast';
 
 const AllComment = () => {
   const { id } = useParams();
-  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const [allComments, setAllComments] = useState([]);
-  const [feedback, setFeedback] = useState('');
-  const [reportButtonDisabled, setReportButtonDisabled] = useState(true);
+  const [feedbacks, setFeedbacks] = useState({}); // Store feedback for each comment by comment ID
+  const { comments } = useComments(id);
 
-  useEffect(() => {
-    axiosSecure.get(`/comments/${id}`).then(res => {
-      setAllComments(res.data);
-    });
-  }, [id]);
-
-  // Handle feedback selection
-  const handleFeedback = value => {
-    setFeedback(value);
-    if (value) {
-      setReportButtonDisabled(false);
-    } else {
-      setReportButtonDisabled(true);
-    }
+  // Handle feedback selection for a specific comment
+  const handleFeedback = (value, commentId) => {
+    setFeedbacks(prevFeedbacks => ({
+      ...prevFeedbacks,
+      [commentId]: value, // Update the feedback for the specific comment
+    }));
   };
 
-  // Handle report button click
-  const handleReport = id => {
+  // Handle report button click for a specific comment
+  const handleReport = commentId => {
+    const feedback = feedbacks[commentId]; // Get the feedback for this specific comment
+
     if (!feedback) {
-      alert('Please select feedback before reporting.');
+      toast.error('Please select feedback before reporting.');
       return;
     }
 
     // Update the reported status in the database
     axiosSecure
-      .patch(`/reportedComment/${id}`, { feedback })
+      .patch(`/reportedComment/${commentId}`, { feedback })
       .then(res => {
         if (res.data.modifiedCount > 0) {
           console.log(res.data);
@@ -54,10 +48,11 @@ const AllComment = () => {
       .catch(err => {
         console.error('Error reporting comment:', err);
       });
+    setFeedbacks('');
   };
 
   return (
-    <div>
+    <div className="bg-pink-50">
       <h1 className="text-3xl font-bold text-center">All Comments</h1>
 
       <div className="overflow-x-auto mt-10">
@@ -68,12 +63,12 @@ const AllComment = () => {
               <th>Email</th>
               <th>Comment</th>
               <th>Feedback</th>
-              <th>Report Button</th>
+              <th>Report </th>
             </tr>
           </thead>
           <tbody>
-            {allComments.map((comment, index) => (
-              <tr key={index}>
+            {comments.map((comment, index) => (
+              <tr key={comment._id}>
                 <th>{index + 1}</th>
                 <td>{comment.email}</td>
                 <td className="text-ellipsis overflow-hidden max-w-xs">
@@ -83,12 +78,14 @@ const AllComment = () => {
                       <button
                         className="btn"
                         onClick={() =>
-                          document.getElementById('my_modal_1').showModal()
+                          document
+                            .getElementById(`modal_${comment._id}`)
+                            .showModal()
                         }
                       >
                         Read More
                       </button>
-                      <dialog id="my_modal_1" className="modal">
+                      <dialog id={`modal_${comment._id}`} className="modal">
                         <div className="modal-box">
                           <h3 className="font-bold text-lg">
                             {comment.commentText}
@@ -111,8 +108,9 @@ const AllComment = () => {
                 {/* Feedback Dropdown */}
                 <td>
                   <select
-                    onChange={e => handleFeedback(e.target.value)}
+                    onChange={e => handleFeedback(e.target.value, comment._id)}
                     className="p-2 bg-pink-100"
+                    value={feedbacks[comment._id] || ''}
                   >
                     <option value="">Select Feedback</option>
                     <option value="Spam">Spam</option>
@@ -125,24 +123,18 @@ const AllComment = () => {
 
                 {/* Report Button */}
                 <td>
-                  {comment.reported ? (
-                    <button
-                      className="px-4 py-1 bg-[#0f172a] text-white "
-                      // Disable the button if no feedback
-
-                      onClick={() => handleReport(comment._id)}
-                    >
-                      <MdReportProblem className="text-2xl" />
-                    </button>
-                  ) : (
-                    <button
-                      disabled
-                      className="px-4 py-1 bg-[#0f172a] text-white "
-                      // Disable the button if no feedback
-                    >
-                      <MdReportProblem className="text-2xl" />
-                    </button>
-                  )}
+                  <button
+                    disabled={!feedbacks[comment._id]} // Disable if no feedback is selected
+                    className={`px-4 py-1 flex items-center ${
+                      !feedbacks[comment._id]
+                        ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                        : 'bg-[#0f172a] text-white'
+                    }`}
+                    onClick={() => handleReport(comment._id)} // Pass the comment._id
+                  >
+                    <MdReportProblem className="text-base mr-1" />
+                    Report
+                  </button>
                 </td>
               </tr>
             ))}
