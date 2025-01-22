@@ -225,7 +225,7 @@ const AddPost = () => {
           to={'/membership'}
           className="px-4 py-2 bg-bgButton font-semibold text-base"
         >
-          MemberShip
+          Become a MemberShip
         </Link>
       )}
     </div>

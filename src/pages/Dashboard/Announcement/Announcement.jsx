@@ -21,6 +21,7 @@ const Announcement = () => {
 
   return (
     <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
+      <h2 className="text-2xl font-bold text-center mt-5">Make Announcement</h2>
       <form onSubmit={handleAnnouncement} className="card-body">
         {/* form first row */}
         <div className="flex flex-col lg:flex-row gap-5">
