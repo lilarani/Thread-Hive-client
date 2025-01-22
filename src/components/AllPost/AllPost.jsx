@@ -5,21 +5,27 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const AllPost = ({ allPosts, setAllPosts }) => {
   const axiosPublic = useAxiosPublic();
-  // const [allPosts, setAllPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isSorted, setIsSorted] = useState(false); // Track whether posts are sorted
   const postsPerPage = 5;
 
   // Fetch all posts
   useEffect(() => {
     axiosPublic.get('/posts').then(res => {
-      setAllPosts(res.data);
+      setAllPosts(res.data); // Set posts in state
     });
-  }, []);
+  }, [axiosPublic, setAllPosts]);
 
   // Calculate indexes for the current page
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = allPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = isSorted
+    ? allPosts.slice(indexOfFirstPost, indexOfLastPost).sort((a, b) => {
+        const aPopularity = a.upVote - a.downVote;
+        const bPopularity = b.upVote - b.downVote;
+        return bPopularity - aPopularity;
+      })
+    : allPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   // Calculate total pages
   const totalPages = Math.ceil(allPosts.length / postsPerPage);
@@ -31,8 +37,22 @@ const AllPost = ({ allPosts, setAllPosts }) => {
     }
   };
 
+  // Sorting function for when the button is clicked
+  const handleSort = () => {
+    setIsSorted(!isSorted);
+  };
+
   return (
     <div className="container mx-auto">
+      <div className="my-5 flex justify-end">
+        <button
+          onClick={handleSort}
+          className="px-4 py-1 bg-gray-800 text-white hover:bg-bgButton transition-all duration-300 ease-in font-semibold"
+        >
+          {isSorted ? 'Sorted Posts' : 'Sort by Popularity'}{' '}
+          {/* Button Text Based on Sort State */}
+        </button>
+      </div>
       {/* Display posts for the current page */}
       {currentPosts.map(post => (
         <Post key={post._id} post={post}></Post>
