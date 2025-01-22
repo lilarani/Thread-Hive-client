@@ -9,6 +9,7 @@ import { FaShareAlt } from 'react-icons/fa';
 import useAuth from '../../hooks/useAuth';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import useComments from '../../hooks/useComments';
+import moment from 'moment';
 
 const PostDetails = () => {
   const axiosSecure = useAxiosSecure();
@@ -115,7 +116,7 @@ const PostDetails = () => {
         <div>
           <h2 className="text-xl font-bold">{post.title}</h2>
           <p className="text-sm text-gray-500">by {post.authorName}</p>
-          <p className="text-sm text-gray-400">{post.date}</p>
+          <p className="text-sm text-gray-400">{moment(post.date).fromNow()}</p>
         </div>
       </div>
       <div className="mt-4">

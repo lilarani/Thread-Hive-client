@@ -3,10 +3,12 @@ import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment/moment';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 
 const AddPost = () => {
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const [showMembershipButton, setShowMembershipButton] = useState(false);
@@ -26,7 +28,7 @@ const AddPost = () => {
   });
 
   useEffect(() => {
-    axiosPublic
+    axiosSecure
       .get(`/my-post`, { params: { userEmail: user.email } })
       .then(res => {
         if (res.data.membership || res.data.postCount < 5) {
@@ -44,6 +46,7 @@ const AddPost = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // handle form submission
   const handleSubmit = async e => {
     e.preventDefault();
     try {
@@ -69,14 +72,27 @@ const AddPost = () => {
     }
   };
 
+  // fetch the tags
+  const {
+    data: tags,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['tags'],
+    queryFn: async () => {
+      const response = await axiosSecure.get('/tags');
+      return response.data.tags || [];
+    },
+  });
+
   return (
     <div className="lg:w-3/4 mx-auto">
       <div className="text-center p-10">
-        <h1 className="text-5xl font-bold">Add Post</h1>
+        <h1 className="text-5xl font-bold">Create Your Story</h1>
         <p className="py-6">
-          Provident cupiditate voluptatem et in.Quaerat fugiat ut assumenda
-          excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a
-          id nisi.
+          Share your thoughts, stories, or updates with the world. Whether it's
+          a personal experience, an exciting announcement, or a creative idea,
+          let your voice be heard and inspire others.
         </p>
       </div>
       {showForm && (
@@ -144,30 +160,37 @@ const AddPost = () => {
                 />
               </div>
             </div>
-            {/* tags */}
 
+            {/* tags */}
             <div className="form-control flex-1 ">
               <label className="label">
                 <span className="label-text">Tag</span>
               </label>
-              <select
-                name="tag"
-                value={formData.tag}
-                onChange={handleChange}
-                className="select select-bordered w-full "
-              >
-                <option disabled value={''}>
-                  Select a Relevant Technology Tag
-                </option>
-                <option>HTML</option>
-                <option>CSS</option>
-                <option>React</option>
-                <option>javascript</option>
-                <option>Tailwind</option>
-                <option>MongoDB</option>
-                <option>Express</option>
-                <option>Others</option>
-              </select>
+              {isLoading ? (
+                <p>Loading tags...</p>
+              ) : isError ? (
+                <p>Error loading tags</p>
+              ) : (
+                <select
+                  name="tag"
+                  value={formData.tag}
+                  onChange={handleChange}
+                  className="select select-bordered w-full "
+                >
+                  <option disabled value="">
+                    Select a Relevant Technology Tag
+                  </option>
+                  {tags?.map(tag => (
+                    <option
+                      className="bg-pink-50"
+                      key={tag.id}
+                      value={tag.tagName}
+                    >
+                      {tag.tagName}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
 
             {/* form third row */}

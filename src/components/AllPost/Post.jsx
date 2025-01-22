@@ -1,3 +1,4 @@
+import moment from 'moment/moment';
 import useAuth from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
 
@@ -20,22 +21,24 @@ const Post = ({ post }) => {
         <div>
           <h2 className="text-lg font-semibold">{post.authorName}</h2>
 
-          <p className="text-sm ">{post.postedTime}</p>
+          <p className="text-sm ">{moment(post.date).fromNow()}</p>
         </div>
       </div>
       {/* Post Description */}
-      <div className="space-y-2">
+      <div className="space-y-2 ">
         <h2 className="text-2xl font-semibold">{post.title}</h2>
 
-        <p className=" text-base mb-4 ">{post.description}</p>
+        <p className=" text-base mb-7">{post.description}</p>
 
         {/* details button */}
-        <Link
-          to={`/post-details/${post._id}`}
-          className="px-4 py-1 bg-bgButton font-semibold"
-        >
-          Details
-        </Link>
+        <div className="mt-8">
+          <Link
+            to={`/post-details/${post._id}`}
+            className="px-4 py-1 bg-bgButton  font-semibold "
+          >
+            View Details
+          </Link>
+        </div>
       </div>
     </div>
   );
