@@ -4,10 +4,13 @@ import useAuth from '../../hooks/useAuth';
 import { useState } from 'react';
 import useAdmin from '../../hooks/useAdmin';
 import logo from '../../assets/Images/logo-thread-hive.jpg';
+import useAnnouncement from '../../hooks/useAnnouncement';
 
 const Navbar = () => {
   const { user, signOutUser, toggleTheme } = useAuth();
   const [dropdown, setDropdown] = useState(false);
+  const [announcements] = useAnnouncement();
+  console.log(announcements);
 
   const [isAdmin] = useAdmin();
 
@@ -36,6 +39,7 @@ const Navbar = () => {
       <li>
         <NavLink to={'/notification'}>
           <IoMdNotifications className="text-xl" />
+          {announcements.length}
         </NavLink>
       </li>
     </>

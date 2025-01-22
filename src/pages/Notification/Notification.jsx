@@ -1,5 +1,5 @@
 const Notification = () => {
-  return <div>notification</div>;
+  return <div className="h-screen">notification</div>;
 };
 
 export default Notification;
