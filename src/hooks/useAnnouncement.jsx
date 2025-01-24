@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 const useAnnouncement = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: announcements = [] } = useQuery({
+  const { data: announcements = [], refetch } = useQuery({
     queryKey: ['announcements'],
     queryFn: async () => {
       const res = await axiosSecure.get('/announcements');

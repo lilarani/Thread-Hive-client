@@ -1,15 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-import { RiDeleteBin2Line } from 'react-icons/ri';
-import useUsers from '../../../hooks/useUsers';
+import { RiAlarmWarningLine, RiDeleteBin2Line } from 'react-icons/ri';
 import Swal from 'sweetalert2';
+import useAuth from '../../../hooks/useAuth';
 
 const ReportedActivities = () => {
   const axiosSecure = useAxiosSecure();
-  const [users, refetch] = useUsers();
-  console.log(users);
+  const { user } = useAuth();
 
-  const { data: comments = [] } = useQuery({
+  const { data: comments = [], refetch } = useQuery({
     queryKey: ['comments'],
     queryFn: async () => {
       const response = await axiosSecure.get('/comments');
@@ -17,9 +16,8 @@ const ReportedActivities = () => {
     },
   });
 
-  // delete the users
-
-  const handleDeleteUsers = id => {
+  // delete the  comment
+  const handleDeleteComment = id => {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -30,11 +28,11 @@ const ReportedActivities = () => {
       confirmButtonText: 'Yes, delete it!',
     }).then(result => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/users/${id}`).then(res => {
+        axiosSecure.delete(`/comments/${id}`).then(res => {
           if (res.data.deletedCount > 0) {
             Swal.fire({
               title: 'Deleted!',
-              text: 'Your file has been deleted.',
+              text: 'The Comment has been deleted.',
               icon: 'success',
             });
             refetch();
@@ -42,6 +40,34 @@ const ReportedActivities = () => {
         });
       }
     });
+  };
+
+  // handle warning function
+  const handleWarning = email => {
+    axiosSecure
+      .post(`/warnings`, {
+        userEmail: email,
+        warning: `We kindly request you to adhere to our privacy policy and guidelines. Please ensure compliance to maintain a safe and respectful environment for everyone.`,
+        date: new Date(),
+      })
+      .then(res => {
+        console.log(res.data);
+        Swal.fire({
+          title: 'Warning Sent!',
+          text: `A warning has been successfully`,
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+        });
+      })
+      .catch(err => {
+        console.log(err.message);
+        Swal.fire({
+          title: 'Error!',
+          text: 'There was an issue sending the warning.',
+          icon: 'error',
+          confirmButtonColor: '#d33',
+        });
+      });
   };
 
   return (
@@ -55,8 +81,7 @@ const ReportedActivities = () => {
               <th>Email</th>
               <th>Comments</th>
               <th>Feadback</th>
-              <th>Delete Users</th>
-              <th>Post Remove</th>
+              <th>Delete Comments</th>
               <th>Warning</th>
             </tr>
           </thead>
@@ -65,14 +90,23 @@ const ReportedActivities = () => {
               <tr key={info._id}>
                 <th>{index + 1}</th>
                 <td>{info.email}</td>
-                <td>{info.commentText}</td>
-                <td>{info.feedback}</td>
+                <td className="text-sm">{info.commentText}</td>
+                <td className="text-sm">{info.feedback}</td>
                 <td>
                   <button
-                    onClick={() => handleDeleteUsers(info._id)}
+                    onClick={() => handleDeleteComment(info._id)}
                     className="px-4 py-1 bg-gray-200"
                   >
-                    <RiDeleteBin2Line className="text-red-600 text-2xl" />
+                    <RiDeleteBin2Line className="text-red-600 text-xl" />
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleWarning(info.email)}
+                    className="px-4 py-1 bg-yellow-200 flex mr-2 items-center"
+                  >
+                    <RiAlarmWarningLine />
+                    Warning
                   </button>
                 </td>
               </tr>

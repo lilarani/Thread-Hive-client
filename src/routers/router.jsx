@@ -2,7 +2,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home/Home';
 import Membarship from '../pages/Membarship/Membarship';
-import { BiNotification } from 'react-icons/bi';
 import Login from '../pages/Login/Login';
 import SignUp from '../pages/SignUp/SignUp';
 import PrivetRouter from './PrivetRouter';
@@ -17,6 +16,7 @@ import ReportedActivities from '../pages/Dashboard/ReportedActivities/ReportedAc
 import AllComment from '../pages/Dashboard/AllComment/AllComment';
 import AdminProfile from '../pages/Dashboard/AdminProfile/AdminProfile';
 import PostDetails from '../pages/PostDetails/PostDetails';
+import Notification from '../pages/Notification/Notification';
 
 const router = createBrowserRouter([
   {
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'notification',
-        element: <BiNotification></BiNotification>,
+        element: <Notification></Notification>,
       },
       {
         path: 'login',

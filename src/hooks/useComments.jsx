@@ -13,9 +13,9 @@ const useComments = postId => {
     queryKey: ['comments', postId],
     queryFn: async () => {
       const res = await axiosSecure.get(`/comments/${postId}`);
-      return res.data; // API থেকে মন্তব্য ডেটা ফেরত পাবে।
+      return res.data;
     },
-    enabled: !!postId, // postId না থাকলে এই কোড রান করবে না।
+    enabled: !!postId,
   });
 
   return { comments, isLoading, isError, refetch };

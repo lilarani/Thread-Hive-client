@@ -10,7 +10,6 @@ const Navbar = () => {
   const { user, signOutUser, toggleTheme } = useAuth();
   const [dropdown, setDropdown] = useState(false);
   const [announcements] = useAnnouncement();
-  console.log(announcements);
 
   const [isAdmin] = useAdmin();
 
