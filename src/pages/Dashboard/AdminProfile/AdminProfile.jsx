@@ -3,6 +3,8 @@ import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 // Registering Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -55,9 +57,21 @@ const AdminProfile = () => {
     e.preventDefault();
     const tagName = e.target.tagName.value;
     const tag = { tagName };
-    axiosSecure.post('/tags', tag).then(res => {
-      e.target.reset();
-    });
+    axiosSecure
+      .post('/tags', tag)
+      .then(res => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Tag Added Successfully!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        e.target.reset();
+      })
+      .catch(err => {
+        toast.error('Failed Tag Added!');
+      });
   };
 
   return (

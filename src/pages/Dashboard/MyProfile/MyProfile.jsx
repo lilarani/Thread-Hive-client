@@ -14,7 +14,6 @@ const MyProfile = () => {
   const [showComentInput, setShowCommentInput] = useState(false);
   const [recentPosts, setRecentPosts] = useState([]);
   const [myInfo, setMyInfo] = useState('');
-  const { comments, refetch } = useComments();
 
   useEffect(() => {
     axiosSecure.get(`/users/${user.email}`).then(res => {
@@ -99,12 +98,12 @@ const MyProfile = () => {
                 >
                   <MdOutlineInsertComment className="md:w-7 h-7" />
                   <span className="text-xs lg:text-xl">Comment</span>
-                  <span className="text-xs lg:text-xl">{comments.length}</span>
+                  <span className="text-xs lg:text-xl">{post.postCount}</span>
                 </button>
 
                 {/* share button */}
                 <WhatsappShareButton
-                  url={`http://localhost:5000`}
+                  url={`http://localhost:5000/${post._id}`}
                   className="flex items-center space-x-1 hover:text-pink-600"
                 >
                   <FaShareAlt className="md:w-7 h-7" />

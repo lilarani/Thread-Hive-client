@@ -1,4 +1,6 @@
+import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import toast from 'react-hot-toast';
 
 const Announcement = () => {
   const axiosSecure = useAxiosSecure();
@@ -13,10 +15,22 @@ const Announcement = () => {
 
     const announcement = { authorImage, authorName, title, description };
 
-    axiosSecure.post('/announcements', announcement).then(res => {
-      console.log(res.data);
-      form.reset();
-    });
+    axiosSecure
+      .post('/announcements', announcement)
+      .then(res => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Announcement Create Successfully!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        form.reset();
+      })
+      .catch(err => {
+        toast.error(err.message);
+      });
   };
 
   return (

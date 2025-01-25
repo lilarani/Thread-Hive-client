@@ -10,20 +10,20 @@ import toast from 'react-hot-toast';
 const AllComment = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
-  const [feedbacks, setFeedbacks] = useState({}); // Store feedback for each comment by comment ID
+  const [feedbacks, setFeedbacks] = useState({});
   const { comments } = useComments(id);
 
   // Handle feedback selection for a specific comment
   const handleFeedback = (value, commentId) => {
     setFeedbacks(prevFeedbacks => ({
       ...prevFeedbacks,
-      [commentId]: value, // Update the feedback for the specific comment
+      [commentId]: value,
     }));
   };
 
   // Handle report button click for a specific comment
   const handleReport = commentId => {
-    const feedback = feedbacks[commentId]; // Get the feedback for this specific comment
+    const feedback = feedbacks[commentId];
 
     if (!feedback) {
       toast.error('Please select feedback before reporting.');

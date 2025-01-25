@@ -86,7 +86,6 @@ const AddPost = () => {
     queryKey: ['tags'],
     queryFn: async () => {
       const response = await axiosSecure.get('/tags');
-      console.log(response.data);
       return response.data || [];
     },
   });

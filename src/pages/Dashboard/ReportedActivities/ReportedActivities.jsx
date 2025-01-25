@@ -51,7 +51,6 @@ const ReportedActivities = () => {
         date: new Date(),
       })
       .then(res => {
-        console.log(res.data);
         Swal.fire({
           title: 'Warning Sent!',
           text: `A warning has been successfully`,
@@ -73,7 +72,7 @@ const ReportedActivities = () => {
   return (
     <div className="bg-pink-50">
       <div className="overflow-x-auto">
-        <table className="table table-zebra">
+        <table className="table table-zebra w-full">
           {/* head */}
           <thead className="border-b-2">
             <tr>

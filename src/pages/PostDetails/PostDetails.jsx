@@ -54,15 +54,14 @@ const PostDetails = () => {
     };
 
     axiosSecure.post('/comments', newComment).then(res => {
-      console.log(res.data);
+      axiosSecure.patch(`/comment-count/${post._id}`);
+      refetch();
     });
 
     try {
       const response = { success: true };
-
       if (response.success) {
         setCommentText('');
-        refetch();
       }
     } catch (error) {
       console.error('Error adding comment:', error);
@@ -157,7 +156,7 @@ const PostDetails = () => {
         </button>
         {user ? (
           <WhatsappShareButton
-            url={`http://localhost:5173/${post._id}`}
+            url={`http://localhost:5000/${post._id}`}
             className="flex items-center space-x-1 hover:text-pink-600"
           >
             <FaShareAlt className="md:w-7 h-7" />
