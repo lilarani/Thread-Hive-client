@@ -17,6 +17,7 @@ import AllComment from '../pages/Dashboard/AllComment/AllComment';
 import AdminProfile from '../pages/Dashboard/AdminProfile/AdminProfile';
 import PostDetails from '../pages/PostDetails/PostDetails';
 import Notification from '../pages/Notification/Notification';
+import Warnings from '../pages/Warnings/Warnings';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: 'post-details/:id',
         element: <PostDetails></PostDetails>,
+      },
+      {
+        path: 'warnings',
+        element: <Warnings></Warnings>,
       },
     ],
   },

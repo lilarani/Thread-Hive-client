@@ -3,6 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from './CheckoutForm';
 
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_pk);
+
 const Membarship = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center ">

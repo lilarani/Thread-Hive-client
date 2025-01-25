@@ -10,9 +10,9 @@ const Dashboard = () => {
   const { theme } = useAuth();
 
   return (
-    <div className="flex ">
-      {/* dashboard side bar */}
-      <div className="w-64 min-h-screen bg-[#0f172a] ">
+    <div className="flex flex-col md:flex-row">
+      {/* Dashboard Side Bar */}
+      <div className="w-full md:w-64 min-h-screen bg-[#0f172a]">
         <ul className="menu text-xs md:text-base font-semibold text-gray-200">
           {isAdmin ? (
             <>
@@ -97,22 +97,22 @@ const Dashboard = () => {
           )}
         </ul>
 
-        {/* shared nav links */}
+        {/* Shared Nav Links */}
         <div className="w-full h-[1px] bg-gray-300 mt-7"></div>
-        <ul className=" menu p-4 text-base font-semibold text-gray-200">
+        <ul className="menu p-4 text-base font-semibold text-gray-200">
           <li>
-            <NavLink to={'/'} className={'text-white '}>
+            <NavLink to={'/'} className={'text-white'}>
               Home
             </NavLink>
           </li>
         </ul>
       </div>
 
-      {/* dashboard content */}
+      {/* Dashboard Content */}
       <div
         className={`flex-1 p-4 ${
           theme === 'dark' ? 'bg-pink-50 text-black' : ''
-        } `}
+        }`}
       >
         <Outlet></Outlet>
       </div>

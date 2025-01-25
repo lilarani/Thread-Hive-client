@@ -1,4 +1,3 @@
-import useAxiosPublic from './../../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import { useEffect, useState } from 'react';
@@ -7,11 +6,14 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 
 const AddPost = () => {
-  const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const [showMembershipButton, setShowMembershipButton] = useState(false);
+  let [addMyPost, setAddMyPost] = useState(false);
+
+  // const [posts] = usePosts();
+  // console.log(posts);
 
   const [formData, setFormData] = useState({
     userName: user?.displayName,
@@ -27,33 +29,13 @@ const AddPost = () => {
     date: new Date(),
   });
 
-  useEffect(() => {
-    axiosSecure
-      .get(`/my-post`, { params: { userEmail: user.email } })
-      .then(res => {
-        if (res.data.membership || res.data.postCount < 5) {
-          setShowForm(true);
-          setShowMembershipButton(false);
-        } else {
-          setShowForm(false);
-          setShowMembershipButton(true);
-        }
-      });
-  }, []);
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
   // handle form submission
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const response = await axiosPublic.post('/posts', formData);
-      console.log(response.data);
-
-      if (response.data.insertedId) {
+      const response = await axiosSecure.post('/posts', formData);
+      setAddMyPost(!addMyPost);
+      if (response?.data?.result?.insertedId) {
         Swal.fire({
           title: 'Success!',
           text: 'Post Added Successfully',
@@ -62,15 +44,38 @@ const AddPost = () => {
         });
       }
     } catch (error) {
-      console.error(error);
       Swal.fire({
         title: 'Error!',
-        text: 'Something went wrong!',
+        text: 'Post could not be added. Please try again later.',
         icon: 'error',
         confirmButtonText: 'Try Again',
       });
     }
   };
+
+  // The handleChange function is called whenever there is a change in the input field.
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // It sends a secure GET request to the `/my-post` endpoint with the user's email as a query parameter.
+  useEffect(() => {
+    axiosSecure
+      .get(`/my-post`, { params: { userEmail: user?.email } })
+      .then(res => {
+        if (res.data && (res.data?.membership || res.data?.postCount < 5)) {
+          setShowForm(true);
+          setShowMembershipButton(false);
+        } else {
+          setShowForm(false);
+          setShowMembershipButton(true);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, [addMyPost]);
 
   // fetch the tags
   const {
@@ -81,7 +86,8 @@ const AddPost = () => {
     queryKey: ['tags'],
     queryFn: async () => {
       const response = await axiosSecure.get('/tags');
-      return response.data.tags || [];
+      console.log(response.data);
+      return response.data || [];
     },
   });
 
@@ -183,7 +189,7 @@ const AddPost = () => {
                   {tags?.map(tag => (
                     <option
                       className="bg-pink-50"
-                      key={tag.id}
+                      key={tag._id}
                       value={tag.tagName}
                     >
                       {tag.tagName}

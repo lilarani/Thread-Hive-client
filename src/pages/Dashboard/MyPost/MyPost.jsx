@@ -64,7 +64,7 @@ const MyPost = () => {
               <tr key={post._id}>
                 <th>{index + 1}</th>
                 <td>{post.title}</td>
-                <td>{post.upVote}</td>
+                <td>{post.upVote + post.downVote}</td>
                 <td>
                   <Link to={`/dashboard/allComment/${post._id}`}>
                     <MdOutlineInsertComment className="text-2xl cursor-pointer" />

@@ -6,12 +6,14 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import useAxiosPublic from './../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const SignUp = () => {
   const { user, createNewUser, updateUserProfile, setUser, googleSignIn } =
     useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
   const {
@@ -27,7 +29,7 @@ const SignUp = () => {
         email: result.user?.email,
         name: result.user?.displayName,
       };
-      axiosPublic.post('/users', userInfo).then(res => {
+      axiosSecure.post('/users', userInfo).then(res => {
         navigate('/');
       });
     });
@@ -48,7 +50,7 @@ const SignUp = () => {
             membership: false,
             status: 'Inactive',
           };
-          axiosPublic.post('/users', userInfo).then(res => {
+          axiosSecure.post('/users', userInfo).then(res => {
             if (res.data.insertedId) {
               reset();
               Swal.fire({
