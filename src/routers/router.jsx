@@ -18,11 +18,13 @@ import AdminProfile from '../pages/Dashboard/AdminProfile/AdminProfile';
 import PostDetails from '../pages/PostDetails/PostDetails';
 import Notification from '../pages/Notification/Notification';
 import Warnings from '../pages/Warnings/Warnings';
+import Errpage from './../pages/Errpage/Errpage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout></MainLayout>,
+    errorElement: <Errpage></Errpage>,
     children: [
       {
         path: '/',
