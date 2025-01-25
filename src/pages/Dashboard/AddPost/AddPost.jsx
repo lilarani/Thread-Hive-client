@@ -12,9 +12,6 @@ const AddPost = () => {
   const [showMembershipButton, setShowMembershipButton] = useState(false);
   let [addMyPost, setAddMyPost] = useState(false);
 
-  // const [posts] = usePosts();
-  // console.log(posts);
-
   const [formData, setFormData] = useState({
     userName: user?.displayName,
     userEmail: user?.email,
@@ -36,6 +33,7 @@ const AddPost = () => {
       const response = await axiosSecure.post('/posts', formData);
       setAddMyPost(!addMyPost);
       if (response?.data?.result?.insertedId) {
+        e.target.reset();
         Swal.fire({
           title: 'Success!',
           text: 'Post Added Successfully',
@@ -112,7 +110,6 @@ const AddPost = () => {
                 <input
                   type="url"
                   name="authorImage"
-                  value={formData.authorImage}
                   onChange={handleChange}
                   placeholder="Author Image"
                   className="input input-bordered"
@@ -126,7 +123,6 @@ const AddPost = () => {
                 <input
                   type="text"
                   name="authorName"
-                  value={formData.authorName}
                   onChange={handleChange}
                   placeholder="Author Name"
                   className="input input-bordered"
@@ -143,7 +139,6 @@ const AddPost = () => {
                 <input
                   type="email"
                   name="authorEmail"
-                  value={formData.authorEmail}
                   onChange={handleChange}
                   placeholder="Author Email"
                   className="input input-bordered"
@@ -157,7 +152,6 @@ const AddPost = () => {
                 <input
                   type="text"
                   name="title"
-                  value={formData.title}
                   onChange={handleChange}
                   placeholder="Post Title"
                   className="input input-bordered"
@@ -178,7 +172,6 @@ const AddPost = () => {
               ) : (
                 <select
                   name="tag"
-                  value={formData.tag}
                   onChange={handleChange}
                   className="select select-bordered w-full "
                 >
@@ -186,11 +179,7 @@ const AddPost = () => {
                     Select a Relevant Technology Tag
                   </option>
                   {tags?.map(tag => (
-                    <option
-                      className="bg-pink-50"
-                      key={tag._id}
-                      value={tag.tagName}
-                    >
+                    <option className="bg-pink-50" key={tag._id}>
                       {tag.tagName}
                     </option>
                   ))}
@@ -208,7 +197,6 @@ const AddPost = () => {
                   rows={'4'}
                   type="text"
                   name="description"
-                  value={formData.description}
                   onChange={handleChange}
                   placeholder="Write..."
                   className="textarea textarea-bordered"
