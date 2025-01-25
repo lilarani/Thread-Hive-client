@@ -6,15 +6,15 @@ import { MdOutlineInsertComment } from 'react-icons/md';
 import { FaShareAlt } from 'react-icons/fa';
 import { WhatsappShareButton } from 'react-share';
 import moment from 'moment';
+import useComments from '../../../hooks/useComments';
 
 const MyProfile = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [showComentInput, setShowCommentInput] = useState(false);
-  const [commentText, setCommentText] = useState('');
-  const [comments, setComments] = useState([]);
   const [recentPosts, setRecentPosts] = useState([]);
   const [myInfo, setMyInfo] = useState('');
+  const { comments, refetch } = useComments();
 
   useEffect(() => {
     axiosSecure.get(`/users/${user.email}`).then(res => {
@@ -28,28 +28,6 @@ const MyProfile = () => {
       setRecentPosts(res.data);
     });
   }, []);
-
-  // handle comment
-  const handleCommentButton = async postId => {
-    if (!commentText) return;
-
-    const newComment = {
-      postId,
-      email: user.email,
-      commentText,
-      feedback: null,
-      isReported: false,
-      date: new Date(),
-    };
-
-    axiosSecure.post('/comments', newComment).then(res => {
-      console.log(res.data);
-    });
-
-    // Update the comments for the specific post
-    setComments(prevComments => [...prevComments, newComment]);
-    setCommentText('');
-  };
 
   return (
     <div className="container mx-auto p-8 bg-pink-50">
@@ -120,43 +98,19 @@ const MyProfile = () => {
                   className="flex items-center space-x-1 hover:text-pink-600"
                 >
                   <MdOutlineInsertComment className="md:w-7 h-7" />
-                  <span className="text-xs md:text-xl">Comment</span>
+                  <span className="text-xs lg:text-xl">Comment</span>
+                  <span className="text-xs lg:text-xl">{comments.length}</span>
                 </button>
 
                 {/* share button */}
                 <WhatsappShareButton
-                  url={`http://localhost:5173`}
+                  url={`http://localhost:5000`}
                   className="flex items-center space-x-1 hover:text-pink-600"
                 >
                   <FaShareAlt className="md:w-7 h-7" />
                   <span className="text-xs md:text-xl">Share</span>
                 </WhatsappShareButton>
               </div>
-
-              {/* Comment input */}
-              {showComentInput && (
-                <div className="mt-4 flex items-start space-x-2">
-                  <img
-                    src={post.authorImage}
-                    alt="User"
-                    className="w-10 h-10 rounded-full"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Write a comment..."
-                    name="comment"
-                    value={commentText}
-                    onChange={e => setCommentText(e.target.value)}
-                    className="flex-1 p-2 border text-xs md:text-base border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
-                  />
-                  <button
-                    onClick={() => handleCommentButton(post._id)} // Pass post._id
-                    className="bg-bgButton px-2 md:px-4 py-2 rounded-lg font-semibold text-xs md:text-base hover:bg-pink-600 hover:text-white transition-all duration-500 ease-in"
-                  >
-                    Add Comment
-                  </button>
-                </div>
-              )}
             </div>
           ))}
         </div>

@@ -8,6 +8,7 @@ const Home = () => {
   return (
     <div>
       <Banner setAllPosts={setAllPosts}></Banner>
+
       <AllPost allPosts={allPosts} setAllPosts={setAllPosts}></AllPost>
     </div>
   );

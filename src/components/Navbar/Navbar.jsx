@@ -42,20 +42,38 @@ const Navbar = () => {
   const navOptions = (
     <>
       <li>
-        <NavLink to={'/'}>Home</NavLink>
+        <NavLink
+          className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
+          to={'/'}
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to={'/membership'}>Membership</NavLink>
+        <NavLink
+          to={'/membership'}
+          className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
+        >
+          Membership
+        </NavLink>
       </li>
       <li>
-        <NavLink to={'/notification'}>
+        <NavLink
+          to={'/notification'}
+          className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
+        >
           <IoMdNotifications className="text-xl" />
           {announcements.length}
         </NavLink>
       </li>
       {warnings.length > 0 && (
         <li>
-          <NavLink to={'/warnings'}>Warnings</NavLink>
+          <NavLink
+            to={'/warnings'}
+            className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
+          >
+            Warnings
+          </NavLink>
         </li>
       )}
     </>
@@ -83,7 +101,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow font-semibold"
             >
               {navOptions}
             </ul>
@@ -92,7 +110,9 @@ const Navbar = () => {
           <a className="text-sm md:text-xl">Thread Hive</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 ">{navOptions}</ul>
+          <ul className="menu menu-horizontal px-1 font-semibold">
+            {navOptions}
+          </ul>
         </div>
         <div className="navbar-end">
           <div className="pr-6 md:pr-14">

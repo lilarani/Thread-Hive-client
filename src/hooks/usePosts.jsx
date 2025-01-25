@@ -6,8 +6,7 @@ const usePosts = () => {
   const { data: posts = [], refetch } = useQuery({
     queryKey: ['posts'],
     queryFn: async () => {
-      const res = axiosSecure.get('/my-post');
-      console.log(res.data);
+      const res = await axiosSecure.get('/posts');
       return res.data;
     },
   });
