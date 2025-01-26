@@ -31,7 +31,9 @@ const Post = ({ post }) => {
             <div className="space-y-2 ">
               <h2 className="text-2xl font-semibold">{post.title}</h2>
 
-              <p className=" text-base mb-7">{post.description}</p>
+              <p className=" text-base mb-7">
+                {post.description.slice(0, 200)}...
+              </p>
               <p className=" text-base mb-7 text-blue-500">#{post.tag}</p>
             </div>
           </div>

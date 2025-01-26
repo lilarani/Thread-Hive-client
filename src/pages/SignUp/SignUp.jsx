@@ -30,6 +30,7 @@ const SignUp = () => {
         name: result.user?.displayName,
       };
       axiosSecure.post('/users', userInfo).then(res => {
+        toast.success(`User Created Successfully`);
         navigate('/');
       });
     });

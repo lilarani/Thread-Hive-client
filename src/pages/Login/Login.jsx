@@ -32,6 +32,7 @@ const Login = () => {
   // Google Sign-in function
   const handleGoogleSignIn = () => {
     googleSignIn().then(res => {
+      toast.success(`Login Successfully`);
       navigate('/');
     });
   };

@@ -38,7 +38,7 @@ const MyProfile = () => {
       <div className="md:w-3/6 h-96 bg-pink-100 mx-auto shadow-md">
         <div className="flex flex-col justify-center items-center p-8 space-y-2">
           <img
-            src={myInfo.userPhoto}
+            src={myInfo.userPhoto || 'https://i.ibb.co.com/h8fLJMm/images.png'}
             alt=""
             className="w-24 h-24 rounded-full "
           />
