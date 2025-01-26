@@ -3,6 +3,7 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { RiAlarmWarningLine, RiDeleteBin2Line } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
+import { Helmet } from 'react-helmet-async';
 
 const ReportedActivities = () => {
   const axiosSecure = useAxiosSecure();
@@ -71,6 +72,9 @@ const ReportedActivities = () => {
 
   return (
     <div className="bg-pink-50">
+      <Helmet>
+        <title>Thread Hive | Reported Activities</title>
+      </Helmet>
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full">
           {/* head */}
@@ -87,22 +91,57 @@ const ReportedActivities = () => {
           <tbody>
             {comments.map((info, index) => (
               <tr key={info._id}>
-                <th>{index + 1}</th>
-                <td>{info.email}</td>
-                <td className="text-sm">{info.commentText}</td>
-                <td className="text-sm">{info.feedback}</td>
+                <th className=" text-xs lg:text-base">{index + 1}</th>
+                <td className="text-xs lg:text-base">{info.email}</td>
+                <td className="text-ellipsis overflow-hidden max-w-xs">
+                  {info.commentText.length > 20 ? (
+                    <>
+                      {info.commentText.slice(0, 20)}...
+                      <button
+                        className="btn text-sm"
+                        onClick={() =>
+                          document
+                            .getElementById(`modal_${info._id}`)
+                            .showModal()
+                        }
+                      >
+                        Read More
+                      </button>
+                      <dialog id={`modal_${info._id}`} className="modal">
+                        <div className="modal-box">
+                          <h3 className="font-bold text-lg">
+                            {info.commentText}
+                          </h3>
+                          <div className="modal-action">
+                            <form method="dialog">
+                              <button className="px-4 py-1 bg-bgButton">
+                                Close
+                              </button>
+                            </form>
+                          </div>
+                        </div>
+                      </dialog>
+                    </>
+                  ) : (
+                    info.commentText
+                  )}
+                </td>
+                <td className="text-xs lg:text-base">{info.feedback}</td>
+
                 <td>
                   <button
                     onClick={() => handleDeleteComment(info._id)}
                     className="px-4 py-1 bg-gray-200"
                   >
-                    <RiDeleteBin2Line className="text-red-600 text-xl" />
+                    <RiDeleteBin2Line className="text-red-600 text-xs lg:text-base" />
                   </button>
                 </td>
+
+                {/* warning btn */}
                 <td>
                   <button
                     onClick={() => handleWarning(info.email)}
-                    className="px-4 py-1 bg-yellow-200 flex mr-2 items-center"
+                    className="px-4 py-1 bg-yellow-200 flex mr-2 items-center text-xs lg:text-base"
                   >
                     <RiAlarmWarningLine />
                     Warning

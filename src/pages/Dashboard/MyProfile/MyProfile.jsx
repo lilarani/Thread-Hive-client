@@ -7,6 +7,7 @@ import { FaShareAlt } from 'react-icons/fa';
 import { WhatsappShareButton } from 'react-share';
 import moment from 'moment';
 import useComments from '../../../hooks/useComments';
+import { Helmet } from 'react-helmet-async';
 
 const MyProfile = () => {
   const { user } = useAuth();
@@ -30,6 +31,10 @@ const MyProfile = () => {
 
   return (
     <div className="container mx-auto p-8 bg-pink-50">
+      <Helmet>
+        <title>Thread Hive | My Profile</title>
+      </Helmet>
+
       <div className="md:w-3/6 h-96 bg-pink-100 mx-auto shadow-md">
         <div className="flex flex-col justify-center items-center p-8 space-y-2">
           <img
@@ -98,7 +103,9 @@ const MyProfile = () => {
                 >
                   <MdOutlineInsertComment className="md:w-7 h-7" />
                   <span className="text-xs lg:text-xl">Comment</span>
-                  <span className="text-xs lg:text-xl">{post.postCount}</span>
+                  <span className="text-xs lg:text-xl">
+                    {post.postCount || 0}
+                  </span>
                 </button>
 
                 {/* share button */}

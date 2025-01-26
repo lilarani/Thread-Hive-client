@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
 
 const AddPost = () => {
   const axiosSecure = useAxiosSecure();
@@ -90,6 +91,10 @@ const AddPost = () => {
 
   return (
     <div className="lg:w-3/4 mx-auto">
+      <Helmet>
+        <title>Thread Hive | Add Post</title>
+      </Helmet>
+
       <div className="text-center p-10">
         <h1 className="text-5xl font-bold">Create Your Story</h1>
         <p className="py-6">

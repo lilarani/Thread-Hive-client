@@ -5,6 +5,7 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet-async';
 
 // Registering Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -76,6 +77,9 @@ const AdminProfile = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Thread Hive | Admin Profile</title>
+      </Helmet>
       <div className="md:w-3/6 h-auto bg-pink-100 mx-auto shadow-md p-8">
         <div className="flex flex-col justify-center items-center space-y-2">
           <img

@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { MdOutlineInsertComment } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const MyPost = () => {
   const axiosSecure = useAxiosSecure();
@@ -44,43 +45,49 @@ const MyPost = () => {
   };
 
   return (
-    <div className="container mx-auto bg-pink-50">
-      <h2>my post: {myPosts.length}</h2>
+    <>
+      <Helmet>
+        <title>Thread Hive | My Posts</title>
+      </Helmet>
 
-      <div className={`overflow-x-auto`}>
-        <table className="table table-zebra ">
-          {/* head */}
-          <thead>
-            <tr>
-              <th></th>
-              <th>Title</th>
-              <th>Number of votes</th>
-              <th>Comments</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {myPosts.map((post, index) => (
-              <tr key={post._id}>
-                <th>{index + 1}</th>
-                <td>{post.title}</td>
-                <td>{post.upVote + post.downVote}</td>
-                <td>
-                  <Link to={`/dashboard/allComment/${post._id}`}>
-                    <MdOutlineInsertComment className="text-2xl cursor-pointer" />
-                  </Link>
-                </td>
-                <td>
-                  <button onClick={() => handleDeletePost(post._id)}>
-                    <RiDeleteBin2Line className="text-red-500 text-2xl cursor-pointer" />
-                  </button>
-                </td>
+      <div className="container mx-auto bg-pink-50">
+        <h2>my post: {myPosts.length}</h2>
+
+        <div className={`overflow-x-auto`}>
+          <table className="table table-zebra ">
+            {/* head */}
+            <thead>
+              <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Number of votes</th>
+                <th>Comments</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {myPosts.map((post, index) => (
+                <tr key={post._id}>
+                  <th>{index + 1}</th>
+                  <td>{post.title}</td>
+                  <td>{post.upVote + post.downVote}</td>
+                  <td>
+                    <Link to={`/dashboard/allComment/${post._id}`}>
+                      <MdOutlineInsertComment className="text-2xl cursor-pointer" />
+                    </Link>
+                  </td>
+                  <td>
+                    <button onClick={() => handleDeletePost(post._id)}>
+                      <RiDeleteBin2Line className="text-red-500 text-2xl cursor-pointer" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
