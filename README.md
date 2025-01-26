@@ -4,7 +4,7 @@
 
 ## Live Link
 
-- [https://thread-hive-server.vercel.app](https://thread-hive-server.vercel.app)
+- [https://thread-hive.web.app](https://thread-hive.web.app)
 
 ## Project Features
 
