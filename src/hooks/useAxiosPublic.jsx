@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosPublic = axios.create({
-  baseURL: 'https://thread-hive.web.app',
+  baseURL: 'https://thread-hive-server.vercel.app',
 });
 const useAxiosPublic = () => {
   return axiosPublic;

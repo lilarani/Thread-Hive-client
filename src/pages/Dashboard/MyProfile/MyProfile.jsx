@@ -110,7 +110,7 @@ const MyProfile = () => {
 
                 {/* share button */}
                 <WhatsappShareButton
-                  url={`https://thread-hive.web.app/${post._id}`}
+                  url={`https://thread-hive-server.vercel.app/${post._id}`}
                   className="flex items-center space-x-1 hover:text-pink-600"
                 >
                   <FaShareAlt className="md:w-7 h-7" />
