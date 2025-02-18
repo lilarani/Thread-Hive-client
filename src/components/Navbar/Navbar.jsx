@@ -51,6 +51,14 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
+          className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
+          to={'/posts'}
+        >
+          Posts
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           to={'/membership'}
           className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
         >
@@ -66,6 +74,14 @@ const Navbar = () => {
           {announcements.length}
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to={'/policy'}
+          className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
+        >
+          Terms & Policies
+        </NavLink>
+      </li>
       {warnings.length > 0 && (
         <li>
           <NavLink
@@ -79,7 +95,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="bg-pink-100 sticky top-0 z-50  backdrop:blur">
+    <div className="bg-white/5% sticky top-0 z-50  backdrop-blur-md">
       <div className="navbar container mx-auto ">
         <div className="navbar-start">
           <div className="dropdown">
@@ -133,7 +149,7 @@ const Navbar = () => {
                 onClick={toggleDropdown}
               />
               {dropdown && (
-                <ul className="absolute right-8 top-16 text-center bg-pink-100 text-black rounded shadow-lg mt-2 w-52 p-4 z-50">
+                <ul className="absolute right-8 top-16 text-center bg-white text-black rounded shadow-lg mt-2 w-52 p-4 z-50">
                   <div className=" flex flex-col justify-center items-center">
                     <img
                       className="w-16 h-16 rounded-full"

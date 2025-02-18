@@ -83,7 +83,7 @@ const AdminProfile = () => {
       <div className="md:w-3/6 h-auto bg-pink-100 mx-auto shadow-md p-8">
         <div className="flex flex-col justify-center items-center space-y-2">
           <img
-            src={myInfo.userPhoto || 'https://i.ibb.co.com/h8fLJMm/images.png'}
+            src={myInfo.userPhoto}
             alt="User Photo"
             className="w-24 h-24 rounded-full"
           />

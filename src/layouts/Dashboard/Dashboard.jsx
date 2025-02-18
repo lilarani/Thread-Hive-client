@@ -1,9 +1,15 @@
 import { GrUserAdmin, GrUserManager } from 'react-icons/gr';
-import { MdOutlineReportProblem } from 'react-icons/md';
+import {
+  MdOutlineReportProblem,
+  MdSignpost,
+  MdOutlinePostAdd,
+} from 'react-icons/md';
 import { TfiAnnouncement } from 'react-icons/tfi';
 import { NavLink, Outlet } from 'react-router-dom';
 import useAdmin from '../../hooks/useAdmin';
 import useAuth from '../../hooks/useAuth';
+import { FaHome } from 'react-icons/fa';
+import { ImProfile } from 'react-icons/im';
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
@@ -70,6 +76,7 @@ const Dashboard = () => {
                     isActive ? 'bg-bgButton text-black' : ''
                   }
                 >
+                  <ImProfile />
                   My Profile
                 </NavLink>
               </li>
@@ -80,6 +87,7 @@ const Dashboard = () => {
                     isActive ? 'bg-bgButton text-black' : ''
                   }
                 >
+                  <MdOutlinePostAdd />
                   Add Post
                 </NavLink>
               </li>
@@ -90,6 +98,7 @@ const Dashboard = () => {
                     isActive ? 'bg-bgButton text-black' : ''
                   }
                 >
+                  <MdSignpost />
                   My Posts
                 </NavLink>
               </li>
@@ -102,6 +111,7 @@ const Dashboard = () => {
         <ul className="menu p-4 text-base font-semibold text-gray-200">
           <li>
             <NavLink to={'/'} className={'text-white'}>
+              <FaHome />
               Home
             </NavLink>
           </li>
@@ -111,7 +121,7 @@ const Dashboard = () => {
       {/* Dashboard Content */}
       <div
         className={`flex-1 p-4 ${
-          theme === 'dark' ? 'bg-pink-50 text-black' : ''
+          theme === 'dark' ? 'bg-white text-black' : ''
         }`}
       >
         <Outlet></Outlet>

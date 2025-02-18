@@ -50,7 +50,7 @@ const MyPost = () => {
         <title>Thread Hive | My Posts</title>
       </Helmet>
 
-      <div className="container mx-auto bg-pink-50">
+      <div className="container mx-auto ">
         <h2>my post: {myPosts.length}</h2>
 
         <div className={`overflow-x-auto`}>

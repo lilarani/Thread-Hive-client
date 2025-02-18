@@ -19,6 +19,8 @@ import PostDetails from '../pages/PostDetails/PostDetails';
 import Notification from '../pages/Notification/Notification';
 import Warnings from '../pages/Warnings/Warnings';
 import Errpage from './../pages/Errpage/Errpage';
+import Policy from '../pages/Policy/Policy';
+import Posts from '../pages/Posts/Posts';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: 'notification',
         element: <Notification></Notification>,
+      },
+      {
+        path: 'policy',
+        element: <Policy></Policy>,
+      },
+      {
+        path: 'posts',
+        element: <Posts></Posts>,
       },
       {
         path: 'login',

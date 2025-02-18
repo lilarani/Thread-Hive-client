@@ -30,12 +30,12 @@ const MyProfile = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-8 bg-pink-50">
+    <div className="container mx-auto p-8 bg-white">
       <Helmet>
         <title>Thread Hive | My Profile</title>
       </Helmet>
 
-      <div className="md:w-3/6 h-96 bg-pink-100 mx-auto shadow-md">
+      <div className="md:w-3/6 h-96  mx-auto shadow-md">
         <div className="flex flex-col justify-center items-center p-8 space-y-2">
           <img
             src={myInfo.userPhoto || 'https://i.ibb.co.com/h8fLJMm/images.png'}
@@ -48,7 +48,7 @@ const MyProfile = () => {
             <p className="font-semibold text-xl mr-2">Badge:</p>
             <img
               className="w-8 h-8 rounded-full"
-              src={myInfo.badge}
+              src={myInfo.badge || 'https://i.ibb.co.com/0n6zJZ7/bronze.jpg'}
               alt="Badge"
             />
           </div>
@@ -60,7 +60,7 @@ const MyProfile = () => {
           {recentPosts.map(post => (
             <div
               key={post._id}
-              className="card bg-pink-100 shadow-md text-black rounded-lg p-6 mb-6 mt-10"
+              className="card shadow-md text-black rounded-lg p-6 mb-6 mt-10"
             >
               {/* Author Section */}
               <div className="flex items-center mb-4">
@@ -110,7 +110,7 @@ const MyProfile = () => {
 
                 {/* share button */}
                 <WhatsappShareButton
-                  url={`https://thread-hive-server.vercel.app/${post._id}`}
+                  url={`http://localhost:5000/${post._id}`}
                   className="flex items-center space-x-1 hover:text-pink-600"
                 >
                   <FaShareAlt className="md:w-7 h-7" />

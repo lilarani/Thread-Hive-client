@@ -8,13 +8,13 @@ const AllPost = ({ allPosts, setAllPosts }) => {
   const axiosPublic = useAxiosPublic();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [isSorted, setIsSorted] = useState(false); // Track whether posts are sorted
+  const [isSorted, setIsSorted] = useState(false);
   const postsPerPage = 5;
 
   // Fetch all posts
   useEffect(() => {
     axiosPublic.get('/posts').then(res => {
-      setAllPosts(res.data); // Set posts in state
+      setAllPosts(res.data);
     });
   }, []);
 
@@ -41,21 +41,19 @@ const AllPost = ({ allPosts, setAllPosts }) => {
 
   // Sorting function for when the button is clicked
   const handleSort = () => {
-    setIsSorted(!isSorted); // Toggle the sorting order
+    setIsSorted(!isSorted);
 
     // If sorted, sort posts by popularity (upvote - downvote)
     if (!isSorted) {
       setAllPosts(prevPosts =>
         [...prevPosts].sort((a, b) => {
-          const aPopularity = a.upVote - a.downVote; // Calculate popularity of post A
-          const bPopularity = b.upVote - b.downVote; // Calculate popularity of post B
-          return bPopularity - aPopularity; // Sort in descending order
+          const aPopularity = a.upVote - a.downVote;
+          const bPopularity = b.upVote - b.downVote;
+          return bPopularity - aPopularity;
         })
       );
     } else {
-      setAllPosts(
-        prevPosts => [...prevPosts].sort((a, b) => a._id - b._id) // If not sorted, restore original order (or any other sorting logic)
-      );
+      setAllPosts(prevPosts => [...prevPosts].sort((a, b) => a._id - b._id));
     }
   };
   // fetch the tags
@@ -117,7 +115,7 @@ const AllPost = ({ allPosts, setAllPosts }) => {
       {/* Pagination Info */}
       <div className="flex justify-between items-center mt-4">
         {/* Showing the range and total */}
-        <span className="text-gray-700 hidden sm:block">
+        <span className=" hidden sm:block">
           Showing {indexOfFirstPost + 1}–
           {Math.min(indexOfLastPost, allPosts.length)} of {allPosts.length}
         </span>

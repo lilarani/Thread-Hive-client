@@ -4,15 +4,16 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
-import useAxiosPublic from './../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import animation from '../../../public/logoutLottie.json';
+import Lottie from 'lottie-react';
+import { Helmet } from 'react-helmet-async';
 
 const SignUp = () => {
-  const { user, createNewUser, updateUserProfile, setUser, googleSignIn } =
-    useAuth();
+  const { createNewUser, updateUserProfile, setUser, googleSignIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const axiosPublic = useAxiosPublic();
+
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
@@ -71,14 +72,14 @@ const SignUp = () => {
 
   return (
     <div className="hero min-h-screen container mx-auto">
-      <div className="hero-content flex-col lg:flex-row-reverse">
+      <Helmet>
+        <title>Thread Hive | Sign-up</title>
+      </Helmet>
+
+      <div className="hero-content flex-col lg:flex-row-reverse gap-6">
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Sign-up now!</h1>
-          <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
+          <h1 className="text-base md:text-2xl font-bold">Sign-up now!</h1>
+          <Lottie animationData={animation}></Lottie>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">

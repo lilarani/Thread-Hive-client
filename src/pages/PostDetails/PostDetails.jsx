@@ -111,7 +111,7 @@ const PostDetails = () => {
         <title>Thread Hive | Post Details</title>
       </Helmet>
 
-      <div className="max-w-4xl mx-auto p-6 bg-pink-100 shadow-lg rounded-lg my-10">
+      <div className="max-w-4xl mx-auto p-6 shadow-lg bg-stone-900 rounded-lg my-10">
         <div className="flex items-center space-x-4">
           <img
             src={post.authorImage}

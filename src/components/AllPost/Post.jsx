@@ -10,8 +10,8 @@ const Post = ({ post }) => {
       <div className="">
         <Link to={`/post-details/${post._id}`}>
           <div
-            className={`card ${
-              theme === 'dark' ? 'bg-[#0f172a] text-white' : 'bg-pink-100'
+            className={`card shadow-lg ${
+              theme === 'dark' ? 'bg-stone-900 text-white' : 'bg-white'
             }  shadow-md text-black rounded-lg p-6`}
           >
             {/* Author Section */}
