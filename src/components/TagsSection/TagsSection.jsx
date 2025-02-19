@@ -39,7 +39,7 @@ const TagsSection = () => {
 
   return (
     <div className="space-y-3 mt-4">
-      <h1 className="text-center font-bold text-3xl">
+      <h1 className="text-center font-bold text-base md:text-3xl">
         Browse Popular Tags to Explore Posts
       </h1>
       <div className="flex flex-wrap gap-4 justify-center">

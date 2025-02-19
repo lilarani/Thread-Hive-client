@@ -19,7 +19,7 @@ const Membarship = () => {
         {/* Membership Info */}
         <div
           className={`bg-base-100 bg-transparent shadow-lg rounded-lg p-6 w-full max-w-lg ${
-            theme === 'dark' ? 'bg-stone-800 text-gray-300' : ''
+            theme === 'dark' ? 'bg-stone-900 text-gray-300' : ''
           }`}
         >
           <h2 className="text-3xl font-bold text-center  mb-4">

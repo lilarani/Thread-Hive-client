@@ -129,7 +129,11 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow font-semibold"
+              className={`menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow font-semibold ${
+                theme === 'dark'
+                  ? 'text-white bg-black'
+                  : ' bg-base-100 text-black'
+              }`}
             >
               {navOptions}
             </ul>
@@ -175,7 +179,7 @@ const Navbar = () => {
                       alt=""
                     />
                   </div>
-                  <li className="px-4 py-2 border-b text-gray-700 font-semibold">
+                  <li className="px-4 py-2 border-b font-semibold">
                     {user?.displayName || 'User'}
                   </li>
                   <li>
