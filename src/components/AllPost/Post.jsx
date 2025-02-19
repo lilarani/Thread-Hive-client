@@ -13,7 +13,7 @@ const Post = ({ post }) => {
             theme === 'dark'
               ? 'bg-stone-900 text-gray-300 border-gray-800'
               : ' border-gray-300 '
-          } rounded-2xl p-6 transition duration-300`}
+          } rounded-2xl p-6 transition duration-300 ease-in`}
         >
           {/* Author Section */}
           <div className="flex items-center gap-3 mb-2">
