@@ -8,7 +8,7 @@ import useAnnouncement from '../../hooks/useAnnouncement';
 import { useQuery } from '@tanstack/react-query';
 
 const Navbar = () => {
-  const { user, signOutUser, toggleTheme } = useAuth();
+  const { user, signOutUser, toggleTheme, theme } = useAuth();
   const [dropdown, setDropdown] = useState(false);
   const [announcements] = useAnnouncement();
 
@@ -161,7 +161,13 @@ const Navbar = () => {
                 onClick={toggleDropdown}
               />
               {dropdown && (
-                <ul className="absolute right-8 top-16 text-center bg-white text-black rounded shadow-lg mt-2 w-52 p-4 z-50">
+                <ul
+                  className={`absolute right-8 top-16 text-center ${
+                    theme === 'dark'
+                      ? 'bg-black text-white'
+                      : 'bg-white text-black '
+                  } rounded shadow-lg mt-2 w-52 p-4 z-50`}
+                >
                   <div className=" flex flex-col justify-center items-center">
                     <img
                       className="w-16 h-16 rounded-full"
