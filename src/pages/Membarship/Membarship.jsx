@@ -22,7 +22,7 @@ const Membarship = () => {
             theme === 'dark' ? 'bg-stone-900 text-gray-300' : ''
           }`}
         >
-          <h2 className="text-3xl font-bold text-center  mb-4">
+          <h2 className="text-base md:text-3xl font-bold text-center  mb-4">
             Become a Member!
           </h2>
           <p className="text-gray-400 text-center mb-6">
