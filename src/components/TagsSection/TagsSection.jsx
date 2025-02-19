@@ -10,6 +10,7 @@ const TagsSection = () => {
   const axiosSecure = useAxiosSecure();
   const [allPosts, setAllPosts] = useState([]);
   const { theme } = useAuth();
+  const [activeTag, setActiveTag] = useState(null);
 
   // fetch the tags
   const {
@@ -26,6 +27,8 @@ const TagsSection = () => {
 
   // search
   const searchByTag = tagName => {
+    setActiveTag(tagName);
+    console.log(tagName);
     axiosSecure.get('/posts').then(res => {
       let posts = res.data;
       const filtered = posts.filter(post => post.tag === tagName);
@@ -44,7 +47,11 @@ const TagsSection = () => {
           <div key={tag._id}>
             <button
               onClick={() => searchByTag(tag.tagName)}
-              className="px-4 py-2 bg-bgButton text-black rounded-full hover:bg-pink-600 transition-all shadow-md text-lg"
+              className={`px-4 py-2 ${
+                activeTag === tag.tagName
+                  ? 'bg-bgButton text-white'
+                  : 'border-[1px] border-pink-500 text-pink-500'
+              } text-black rounded-full hover:bg-pink-600 transition-all shadow-md text-lg`}
             >
               {tag.tagName}
             </button>

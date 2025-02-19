@@ -16,7 +16,7 @@ const PostDetails = () => {
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user, theme } = useAuth();
   const navigate = useNavigate();
   const [post, setPost] = useState('');
   const [showComentInput, setShowCommentInput] = useState(false);
@@ -111,7 +111,11 @@ const PostDetails = () => {
         <title>Thread Hive | Post Details</title>
       </Helmet>
 
-      <div className="max-w-4xl mx-auto p-6 shadow-lg bg-stone-900 rounded-lg my-10">
+      <div
+        className={`max-w-4xl mx-auto p-6 shadow-lg  rounded-lg my-10 ${
+          theme === 'dark' ? 'bg-stone-900 text-gray-300' : ''
+        }`}
+      >
         <div className="flex items-center space-x-4">
           <img
             src={post.authorImage}
@@ -120,10 +124,8 @@ const PostDetails = () => {
           />
           <div>
             <h2 className="text-xl font-bold">{post.title}</h2>
-            <p className="text-sm text-gray-500">by {post.authorName}</p>
-            <p className="text-sm text-gray-400">
-              {moment(post.date).fromNow()}
-            </p>
+            <p className="text-sm">by {post.authorName}</p>
+            <p className="text-sm">{moment(post.date).fromNow()}</p>
           </div>
         </div>
         <div className="mt-4">

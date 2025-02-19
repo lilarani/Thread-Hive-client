@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import AllPost from '../../components/AllPost/AllPost';
 
 const Posts = () => {
+  const [allPosts, setAllPosts] = useState([]);
+
   return (
     <div>
-      hello
-      <AllPost></AllPost>
+      <AllPost allPosts={allPosts} setAllPosts={setAllPosts}></AllPost>
     </div>
   );
 };

@@ -22,7 +22,8 @@ const AllPost = ({ allPosts, setAllPosts }) => {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = isSorted
-    ? allPosts.slice(indexOfFirstPost, indexOfLastPost).sort((a, b) => {
+    ? allPosts |
+      [].slice(indexOfFirstPost, indexOfLastPost).sort((a, b) => {
         const aPopularity = a.upVote - b.downVote;
         const bPopularity = b.upVote - a.downVote;
         return bPopularity - aPopularity;
