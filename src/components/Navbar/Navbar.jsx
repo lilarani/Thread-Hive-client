@@ -43,7 +43,9 @@ const Navbar = () => {
     <>
       <li>
         <NavLink
-          className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
+          className={({ isActive }) =>
+            isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
+          }
           to={'/'}
         >
           Home
@@ -51,8 +53,10 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
-          to={'/posts'}
+          className={({ isActive }) =>
+            isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
+          }
+          to={'/my-posts'}
         >
           Posts
         </NavLink>
@@ -60,7 +64,9 @@ const Navbar = () => {
       <li>
         <NavLink
           to={'/membership'}
-          className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
+          className={({ isActive }) =>
+            isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
+          }
         >
           Membership
         </NavLink>
@@ -68,7 +74,9 @@ const Navbar = () => {
       <li>
         <NavLink
           to={'/notification'}
-          className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
+          className={({ isActive }) =>
+            isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
+          }
         >
           <IoMdNotifications className="text-xl" />
           {announcements.length}
@@ -77,7 +85,9 @@ const Navbar = () => {
       <li>
         <NavLink
           to={'/policy'}
-          className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
+          className={({ isActive }) =>
+            isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
+          }
         >
           Terms & Policies
         </NavLink>
@@ -86,7 +96,9 @@ const Navbar = () => {
         <li>
           <NavLink
             to={'/warnings'}
-            className={({ isActive }) => (isActive ? 'bg-bgButton ' : '')}
+            className={({ isActive }) =>
+              isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
+            }
           >
             Warnings
           </NavLink>

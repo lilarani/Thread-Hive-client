@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         element: <Policy></Policy>,
       },
       {
-        path: 'posts',
+        path: 'my-posts',
         element: <Posts></Posts>,
       },
       {

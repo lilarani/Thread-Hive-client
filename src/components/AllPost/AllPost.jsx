@@ -79,7 +79,7 @@ const AllPost = ({ allPosts, setAllPosts }) => {
   };
 
   return (
-    <div className="container mx-auto mt-20">
+    <div className="container mx-auto mt-20 p-4">
       {/* tag buttons */}
       <div className="space-y-3">
         <h1 className="text-center font-bold text-3xl">
