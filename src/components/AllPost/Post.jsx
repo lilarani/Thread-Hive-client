@@ -9,11 +9,11 @@ const Post = ({ post }) => {
     <div className="pb-3">
       <Link to={`/post-details/${post._id}`}>
         <div
-          className={`card shadow-xl border  ${
+          className={`card shadow-sm border  ${
             theme === 'dark'
               ? 'bg-stone-900 text-gray-300 border-gray-800'
               : ' border-gray-300 '
-          } rounded-2xl p-6 transition duration-300 hover:shadow-xl`}
+          } rounded-2xl p-6 transition duration-300`}
         >
           {/* Author Section */}
           <div className="flex items-center gap-3 mb-2">
