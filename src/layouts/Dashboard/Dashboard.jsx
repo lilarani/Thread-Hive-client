@@ -16,9 +16,10 @@ const Dashboard = () => {
   const { theme } = useAuth();
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row  ">
       {/* Dashboard Side Bar */}
-      <div className="w-full md:w-64 min-h-screen bg-[#0f172a]">
+
+      <div className="w-full md:w-64 min-h-screen bg-[#0f172a]  ">
         <ul className="menu text-xs md:text-base font-semibold text-gray-200">
           {isAdmin ? (
             <>

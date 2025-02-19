@@ -16,6 +16,7 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
   // Sign-in function
@@ -40,6 +41,12 @@ const Login = () => {
     });
   };
 
+  // credentials
+  let adminCredentials = () => {
+    setValue('email', 'neela@gmail.com');
+    setValue('password', '1234Aa@');
+  };
+
   return (
     <div>
       <Helmet>
@@ -59,7 +66,21 @@ const Login = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               {/* Email Field */}
               <div className="form-control">
-                <label className="label">
+                <h3 className="text-semibold text-base md:text-2xl">
+                  Credentials
+                </h3>
+
+                <div>
+                  <button
+                    type="button"
+                    onClick={adminCredentials}
+                    className="text-pink-500 border-pink-500 px-4 py-1 hover:text-pink-700 border-[1px]"
+                  >
+                    Admin
+                  </button>
+                </div>
+
+                <label className="label mt-6">
                   <span className="label-text">Email</span>
                 </label>
                 <input
