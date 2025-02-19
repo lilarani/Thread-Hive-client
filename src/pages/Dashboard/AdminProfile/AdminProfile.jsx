@@ -80,7 +80,7 @@ const AdminProfile = () => {
       <Helmet>
         <title>Thread Hive | Admin Profile</title>
       </Helmet>
-      <div className="md:w-3/6 h-auto bg-pink-100 mx-auto shadow-md p-8">
+      <div className="md:w-3/6 h-auto  mx-auto shadow-md p-8">
         <div className="flex flex-col justify-center items-center space-y-2">
           <img
             src={myInfo.userPhoto}
@@ -103,7 +103,7 @@ const AdminProfile = () => {
       <div className="my-16 mx-auto flex flex-col justify-center items-center space-y-4">
         <h2 className="font-bold text-xl text-center">Add New Tag</h2>
         <form
-          className="w-3/6 bg-pink-100 p-4 rounded-lg shadow-md"
+          className="w-3/6  p-4 rounded-lg shadow-md"
           onSubmit={handleAddTag} // Use onSubmit for the form
         >
           <div className="mb-4">
