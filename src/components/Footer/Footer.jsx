@@ -1,7 +1,7 @@
 import logo from '../../assets/Images/logo-thread-hive.jpg';
 const Footer = () => {
   return (
-    <footer className="footer footer-center bg-[#0f172a] text-gray-300 p-10">
+    <footer className="footer footer-center bg-[#0f172a] text-gray-300 p-10 mt-16">
       <aside>
         <img className="w-16 h-16 rounded-full" src={logo} alt="" />
         <p className="font-bold text-xl">

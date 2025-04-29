@@ -11,7 +11,8 @@ import Lottie from 'lottie-react';
 import { Helmet } from 'react-helmet-async';
 
 const SignUp = () => {
-  const { createNewUser, updateUserProfile, setUser, googleSignIn } = useAuth();
+  const { createNewUser, updateUserProfile, setUser, googleSignIn, theme } =
+    useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
   const axiosSecure = useAxiosSecure();
@@ -81,10 +82,12 @@ const SignUp = () => {
           <h1 className="text-base md:text-2xl font-bold">Sign-up now!</h1>
           <Lottie animationData={animation}></Lottie>
         </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <div
+          className={`card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl `}
+        >
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <div className="form-control">
-              <label className="label">
+              <label className="label ">
                 <span className="label-text">Name</span>
               </label>
               <input
@@ -92,7 +95,7 @@ const SignUp = () => {
                 type="text"
                 name="name"
                 placeholder="enter your name"
-                className="input input-bordered"
+                className="input input-bordered text-black"
                 required
               />
               {errors.name && (
@@ -110,7 +113,7 @@ const SignUp = () => {
                 type="email"
                 name="email"
                 placeholder="enter your email"
-                className="input input-bordered"
+                className="input input-bordered text-black"
                 required
               />
               {errors.email && (
@@ -137,7 +140,7 @@ const SignUp = () => {
                 type={showPassword ? 'text' : 'password'}
                 name="password"
                 placeholder="password"
-                className="input input-bordered"
+                className="input input-bordered text-black"
                 required
               />
               {errors.password?.type === 'required' && (
@@ -167,7 +170,7 @@ const SignUp = () => {
                 {...register('photo', { required: true })}
                 name="photo"
                 placeholder="photo-url"
-                className="input input-bordered"
+                className="input input-bordered text-black"
                 required
               />
               {errors.photo && (

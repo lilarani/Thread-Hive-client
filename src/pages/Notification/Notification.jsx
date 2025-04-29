@@ -12,7 +12,7 @@ const Notification = () => {
       <Helmet>
         <title>Thread Hive | Notification</title>
       </Helmet>
-      <div className="p-6  rounded-lg shadow-lg">
+      <div className="p-4  rounded-lg shadow-lg container mx-auto">
         <div className="flex items-center mb-6">
           <FaComment className="text-pink-500 text-3xl mr-2" />
           <h1 className="text-3xl font-extrabold ">Notifications</h1>

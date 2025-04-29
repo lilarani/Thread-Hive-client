@@ -9,7 +9,7 @@ import animation from '../../../public/loginLotti.json';
 import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
-  const { userLogin, googleSignIn } = useAuth();
+  const { userLogin, googleSignIn, theme } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const {
@@ -61,7 +61,9 @@ const Login = () => {
           <div className="text-center lg:text-left">
             <Lottie animationData={animation}></Lottie>
           </div>
-          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+          <div
+            className={`card bg-base-100  w-full max-w-sm shrink-0 shadow-2xl `}
+          >
             {/* Form */}
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               {/* Email Field */}
@@ -70,7 +72,7 @@ const Login = () => {
                   Credentials
                 </h3>
 
-                <div>
+                <div className="mt-3">
                   <button
                     type="button"
                     onClick={adminCredentials}
@@ -80,13 +82,13 @@ const Login = () => {
                   </button>
                 </div>
 
-                <label className="label mt-6">
+                <label className="label mt-6 text-white">
                   <span className="label-text">Email</span>
                 </label>
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="input input-bordered"
+                  className="input input-bordered text-black"
                   {...register('email', {
                     required: 'Email is required',
                     pattern: {
@@ -110,7 +112,7 @@ const Login = () => {
                 <input
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Enter your password"
-                  className="input input-bordered"
+                  className="input input-bordered text-black"
                   {...register('password', {
                     required: 'Password is required',
                     minLength: {

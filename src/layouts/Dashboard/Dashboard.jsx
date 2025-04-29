@@ -19,7 +19,7 @@ const Dashboard = () => {
     <div className="flex flex-col md:flex-row  ">
       {/* Dashboard Side Bar */}
 
-      <div className="w-full md:w-64 min-h-screen bg-[#0f172a]  ">
+      <div className="w-full md:w-64 min-h-screen bg-[#0f172a] md:fixed md:top-0 md:z-50">
         <ul className="menu text-xs md:text-base font-semibold text-gray-200">
           {isAdmin ? (
             <>
@@ -121,7 +121,7 @@ const Dashboard = () => {
 
       {/* Dashboard Content */}
       <div
-        className={`flex-1 p-4 ${
+        className={`flex-1 p-4 md:ml-64 ${
           theme === 'dark' ? 'bg-white text-black' : ''
         }`}
       >

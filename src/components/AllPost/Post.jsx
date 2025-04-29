@@ -37,7 +37,7 @@ const Post = ({ post }) => {
             {/* Details Button */}
             <div className="mt-4">
               <Link to={`/post-details/${post._id}`}>
-                <button className="px-4 py-2 bg-bgButton text-black rounded-lg hover:bg-pink-600 transition">
+                <button className="px-4 py-2 bg-bgButton text-black rounded-lg hover:bg-pink-600 transition text-white">
                   Read More
                 </button>
               </Link>

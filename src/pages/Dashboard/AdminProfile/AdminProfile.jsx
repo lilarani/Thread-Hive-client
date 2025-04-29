@@ -31,7 +31,6 @@ const AdminProfile = () => {
       setMyInfo(res.data);
     });
 
-    // Fetch the total post, comment, and user counts from your server
     axiosSecure
       .get('/stats')
       .then(response => {
@@ -76,36 +75,34 @@ const AdminProfile = () => {
   };
 
   return (
-    <div>
+    <div className="p-4 sm:p-10">
       <Helmet>
         <title>Thread Hive | Admin Profile</title>
       </Helmet>
-      <div className="md:w-3/6 h-auto  mx-auto shadow-md p-8">
-        <div className="flex flex-col justify-center items-center space-y-2">
+
+      {/* Profile Section */}
+      <div className="max-w-full sm:max-w-5xl text-left mb-10">
+        <img
+          src={myInfo.userPhoto}
+          alt="User Photo"
+          className="w-20 h-20 sm:w-28 sm:h-28 rounded-full"
+        />
+        <h2 className="text-2xl sm:text-3xl font-bold mt-4">{myInfo.name}</h2>
+        <p className="text-base sm:text-lg text-gray-700">{myInfo.email}</p>
+        <div className="flex items-center mt-2">
+          <p className="font-semibold text-base sm:text-xl mr-2">Badge:</p>
           <img
-            src={myInfo.userPhoto}
-            alt="User Photo"
-            className="w-24 h-24 rounded-full"
+            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"
+            src={myInfo.badge}
+            alt="Badge"
           />
-          <h2 className="text-2xl font-bold">{myInfo.name}</h2>
-          <p className="text-xl font-semibold">{myInfo.email}</p>
-          <div className="flex">
-            <p className="font-semibold text-xl mr-2">Badge:</p>
-            <img
-              className="w-8 h-8 rounded-full"
-              src={myInfo.badge}
-              alt="Badge"
-            />
-          </div>
         </div>
       </div>
-      {/* add tags*/}
-      <div className="my-16 mx-auto flex flex-col justify-center items-center space-y-4">
-        <h2 className="font-bold text-xl text-center">Add New Tag</h2>
-        <form
-          className="w-3/6  p-4 rounded-lg shadow-md"
-          onSubmit={handleAddTag} // Use onSubmit for the form
-        >
+
+      {/* Add Tag Form */}
+      <div className="max-w-full sm:max-w-2xl p-4 sm:p-6 bg-gray-100 rounded-lg mb-10">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4">Add New Tag</h2>
+        <form onSubmit={handleAddTag}>
           <div className="mb-4">
             <label
               className="block text-sm font-semibold mb-2"
@@ -117,27 +114,26 @@ const AdminProfile = () => {
               type="text"
               id="tagName"
               name="tagName"
-              className="w-full p-2 border border-pink-300 focus:border-pink-300 rounded-lg outline-none"
+              className="w-full p-2 sm:p-3 border border-gray-400 rounded-lg outline-none"
               placeholder="Enter tag name"
               required
             />
           </div>
-          <div className="flex justify-center">
-            <button
-              type="submit" // Submit the form when the button is clicked
-              className="bg-bgButton text-white py-2 px-6 rounded-lg hover:bg-pink-600 font-semibold"
-            >
-              Add Tag
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="bg-bgButton text-white py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-pink-600 font-semibold"
+          >
+            Add Tag
+          </button>
         </form>
       </div>
 
-      <div className="mt-10 w-3/6 mx-auto">
-        <h3 className="text-xl font-bold text-center mb-4">
-          Site Stats Pie Chart
-        </h3>
-        <Pie data={chartData} />
+      {/* Chart Section */}
+      <div className="max-w-full sm:max-w-3xl">
+        <h3 className="text-xl sm:text-2xl font-bold mb-4">Site Stats</h3>
+        <div className="w-full sm:w-80">
+          <Pie data={chartData} />
+        </div>
       </div>
     </div>
   );

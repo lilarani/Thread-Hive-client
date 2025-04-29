@@ -15,7 +15,7 @@ const Banner = ({ setAllPosts }) => {
   return (
     <div className="banner bg-fixed w-full">
       <div className="text-center flex flex-col justify-center items-center w-4/6 mx-auto">
-        <h3 className="mb-6 text-lg mt-20 text-white font-bold">
+        <h3 className="mb-6 text-lg mt-16 text-white font-bold">
           Discover new ideas, share your thoughts, and connect with the world.{' '}
           <br />
           Start your journey today with our platform.

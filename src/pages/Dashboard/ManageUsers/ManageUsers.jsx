@@ -84,7 +84,7 @@ const ManageUsers = () => {
                     ) : (
                       <button
                         onClick={() => handleMakeAdmin(user)}
-                        className="bg-[#0f172a] px-2 sm:px-4 py-1"
+                        className="bg-orange-500 px-2 sm:px-4 py-1"
                       >
                         <FaUsers className="text-white" />
                       </button>
