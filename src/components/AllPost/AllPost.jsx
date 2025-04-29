@@ -3,10 +3,11 @@ import useAxiosPublic from '../../hooks/useAxiosPublic';
 import Post from './Post';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useQuery } from '@tanstack/react-query';
+import useAuth from '../../hooks/useAuth';
 
 const AllPost = ({ allPosts, setAllPosts }) => {
   const axiosPublic = useAxiosPublic();
-
+  const { theme } = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
   const [isSorted, setIsSorted] = useState(false);
   const postsPerPage = 5;
@@ -90,7 +91,9 @@ const AllPost = ({ allPosts, setAllPosts }) => {
             <div key={tag._id}>
               <button
                 onClick={() => searchByTag(tag.tagName)}
-                className="px-4 py-2 bg-bgButton text-black rounded-full hover:bg-pink-600 transition-all shadow-md text-lg"
+                className={`px-4 py-2  ${
+                  theme === 'dark' ? 'text-white' : 'text-black'
+                }  rounded-full border transition-all shadow-md text-lg`}
               >
                 {tag.tagName}
               </button>
@@ -101,7 +104,11 @@ const AllPost = ({ allPosts, setAllPosts }) => {
       <div className="my-5 flex justify-end mt-24">
         <button
           onClick={handleSort}
-          className="px-4 py-1 bg-gray-800 text-white hover:bg-bgButton transition-all duration-300 ease-in font-semibold"
+          className={`px-4 py-1 bg-gray-800 text-white ${
+            theme === 'dark'
+              ? 'hover:bg-[#1c9cdc] bg-[#0284c7]'
+              : 'hover:bg-slate-500'
+          } transition-all duration-300 ease-in font-semibold`}
         >
           {isSorted ? 'Sorted Posts' : 'Sort by Popularity'}{' '}
           {/* Button Text Based on Sort State */}
@@ -143,10 +150,10 @@ const AllPost = ({ allPosts, setAllPosts }) => {
               <li key={number}>
                 <button
                   onClick={() => paginate(number)}
-                  className={`px-3 py-1 rounded ${
+                  className={`px-3 py-1  rounded  ${
                     currentPage === number
-                      ? 'bg-pink-500 text-white'
-                      : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                      ? 'bg-[#0284c7] text-white '
+                      : '  bg-gray-300 text-black'
                   }`}
                 >
                   {number}

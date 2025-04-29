@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       backgroundColor: {
-        bgButton: '#EC4899',
+        bgButton: '#0284c7',
       },
       borderColor: {
         border: '#EC4899',

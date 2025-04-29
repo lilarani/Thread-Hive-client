@@ -140,7 +140,7 @@ const PostDetails = () => {
           {/* Up Vote */}
           <button
             onClick={handleUpVote}
-            className="flex items-center space-x-1 hover:text-pink-600"
+            className="flex items-center space-x-1 hover:text-[#1c9cdc]"
           >
             <BiUpvote className="md:w-7 h-7" />
             <span className="text-xs md:text-xl">Up Vote</span>
@@ -149,7 +149,7 @@ const PostDetails = () => {
           {/* Down Vote */}
           <button
             onClick={handleDownVote}
-            className="flex items-center space-x-1 hover:text-pink-600"
+            className="flex items-center space-x-1 hover:text-[#1c9cdc]"
           >
             <BiDownvote className="md:w-7 h-7" />
             <span className="text-xs md:text-xl">Down Vote</span>
@@ -160,7 +160,7 @@ const PostDetails = () => {
             onClick={() => {
               if (!redirectToLogin()) setShowCommentInput(!showComentInput);
             }}
-            className="flex items-center space-x-1 hover:text-pink-600"
+            className="flex items-center space-x-1 hover:text-[#1c9cdc]"
           >
             <MdOutlineInsertComment className="md:w-7 h-7" />
             <span className="text-xs md:text-xl">Comment</span>
@@ -169,10 +169,12 @@ const PostDetails = () => {
           {user ? (
             <WhatsappShareButton
               url={`https://thread-hive-server.vercel.app/${post._id}`}
-              className="flex items-center space-x-1 hover:text-pink-600"
+              className="flex items-center space-x-1 "
             >
               <FaShareAlt className="md:w-7 h-7" />
-              <span className="text-xs md:text-xl">Share</span>
+              <span className="text-xs md:text-xl hover:text-[#1c9cdc]">
+                Share
+              </span>
             </WhatsappShareButton>
           ) : (
             <button onClick={redirectToLogin} className="flex ">
@@ -195,11 +197,15 @@ const PostDetails = () => {
               name="comment"
               value={commentText}
               onChange={e => setCommentText(e.target.value)}
-              className="flex-1 p-2 border text-xs md:text-base border-gray-300 rounded-lg focus:outline-none focus:border-pink-500 text-black"
+              className="flex-1 p-2 border text-xs md:text-base border-gray-300 rounded-lg focus:outline-none focus:border-[#1c9cdc] text-black"
             />
             <button
               onClick={handleCommentButton}
-              className="bg-bgButton px-2 md:px-4 py-2 rounded-lg font-semibold text-xs md:text-base hover:bg-pink-600 hover:text-white transition-all duration-500 ease-in"
+              className={` ${
+                theme === 'dark'
+                  ? 'bg-bgButton text-white'
+                  : 'bg-black text-white'
+              } px-2 md:px-4 py-2 rounded-lg font-semibold text-xs md:text-base   transition-all duration-500 ease-in`}
             >
               Add Comment
             </button>

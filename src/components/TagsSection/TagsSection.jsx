@@ -47,11 +47,9 @@ const TagsSection = () => {
           <div key={tag._id}>
             <button
               onClick={() => searchByTag(tag.tagName)}
-              className={`px-4 py-2 ${
-                activeTag === tag.tagName
-                  ? 'bg-bgButton text-white'
-                  : 'border-[1px] border-pink-500 text-pink-500'
-              } text-black rounded-full hover:bg-pink-600 transition-all shadow-md text-lg`}
+              className="px-4 py-2 bg-black
+              text-white border-[1px]
+              rounded-full transition-all shadow-md text-lg"
             >
               {tag.tagName}
             </button>

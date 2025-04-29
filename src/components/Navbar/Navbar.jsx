@@ -42,72 +42,141 @@ const Navbar = () => {
   const navOptions = (
     <>
       <li>
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
-          }
-          to={'/'}
-        >
-          Home
-        </NavLink>
+        {theme === 'dark' ? (
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? 'bg-bgButton hover:bg-[#1c9cdc] text-white'
+                : 'hover:text-purple-500'
+            }
+            to={'/'}
+          >
+            Home
+          </NavLink>
+        ) : (
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? 'bg-black hover:bg-[#1b0404] text-white' : ''
+            }
+            to={'/'}
+          >
+            Home
+          </NavLink>
+        )}
       </li>
       <li>
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
-          }
-          to={'/my-posts'}
-        >
-          Posts
-        </NavLink>
+        {theme === 'dark' ? (
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? 'bg-bgButton hover:bg-[#1c9cdc] text-white' : ''
+            }
+            to={'/my-posts'}
+          >
+            Posts
+          </NavLink>
+        ) : (
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? 'bg-black hover:bg-[#1b0404] text-white' : ''
+            }
+            to={'/my-posts'}
+          >
+            Posts
+          </NavLink>
+        )}
       </li>
       <li>
-        <NavLink
-          to={'/membership'}
-          className={({ isActive }) =>
-            isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
-          }
-        >
-          Membership
-        </NavLink>
+        {theme === 'dark' ? (
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? 'bg-bgButton hover:bg-[#1c9cdc] text-white' : ''
+            }
+            to={'/membership'}
+          >
+            Membership
+          </NavLink>
+        ) : (
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? 'bg-black hover:bg-[#1b0404] text-white' : ''
+            }
+            to={'/membership'}
+          >
+            Membership
+          </NavLink>
+        )}
       </li>
       <li>
-        <NavLink
-          to={'/notification'}
-          className={({ isActive }) =>
-            isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
-          }
-        >
-          <IoMdNotifications className="text-xl" />
-          {announcements.length}
-        </NavLink>
+        {theme === 'dark' ? (
+          <NavLink
+            to={'/notification'}
+            className={({ isActive }) =>
+              isActive ? 'bg-bgButton  hover:bg-[#1c9cdc] text-white' : ''
+            }
+          >
+            <IoMdNotifications className="text-xl" />
+            {announcements.length}
+          </NavLink>
+        ) : (
+          <NavLink
+            to={'/notification'}
+            className={({ isActive }) =>
+              isActive ? 'bg-black hover:bg-[#1b0404] text-white' : ''
+            }
+          >
+            <IoMdNotifications className="text-xl" />
+            {announcements.length}
+          </NavLink>
+        )}
       </li>
       <li>
-        <NavLink
-          to={'/policy'}
-          className={({ isActive }) =>
-            isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
-          }
-        >
-          Terms & Policies
-        </NavLink>
+        {theme === 'dark' ? (
+          <NavLink
+            to={'/policy'}
+            className={({ isActive }) =>
+              isActive ? 'bg-bgButton hover:bg-[#1c9cdc] text-white' : ''
+            }
+          >
+            Terms & Policies
+          </NavLink>
+        ) : (
+          <NavLink
+            to={'/policy'}
+            className={({ isActive }) =>
+              isActive ? 'bg-black hover:bg-[#1b0404] text-white' : ''
+            }
+          >
+            Terms & Policies
+          </NavLink>
+        )}
       </li>
       {warnings.length > 0 && (
         <li>
-          <NavLink
-            to={'/warnings'}
-            className={({ isActive }) =>
-              isActive ? 'bg-bgButton hover:bg-pink-600' : 'hover:text-pink-500'
-            }
-          >
-            Warnings
-          </NavLink>
+          {theme === 'dark ' ? (
+            <NavLink
+              to={'/warnings'}
+              className={({ isActive }) =>
+                isActive ? 'bg-bgButton hover:bg-[#1c9cdc]' : ''
+              }
+            >
+              Warnings
+            </NavLink>
+          ) : (
+            <NavLink
+              to={'/warnings'}
+              className={({ isActive }) =>
+                isActive ? 'bg-black hover:bg-[#1b0404] text-white' : ''
+              }
+            >
+              Warnings
+            </NavLink>
+          )}
         </li>
       )}
     </>
   );
   return (
-    <div className="bg-white/5% sticky top-0 z-50  backdrop-blur-md">
+    <div className="bg-white/50% sticky top-0 z-50 shadow-md backdrop-blur-md">
       <div className="navbar container mx-auto ">
         <div className="navbar-start">
           <div className="dropdown">
@@ -138,11 +207,13 @@ const Navbar = () => {
               {navOptions}
             </ul>
           </div>
-          <img className="w-10 h-10 rounded-full mr-2" src={logo} alt="" />
-          <a className="text-sm md:text-xl">Thread Hive</a>
+          <Link to={'/'}>
+            <img className="w-10 h-10 rounded-full mr-2" src={logo} alt="" />
+          </Link>
+          <a className="text-sm md:text-xl font-bold">Thread Hive</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 font-semibold">
+          <ul className="menu menu-horizontal px-1 font-semibold ">
             {navOptions}
           </ul>
         </div>
